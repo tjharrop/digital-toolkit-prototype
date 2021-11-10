@@ -5818,3 +5818,12 @@ a:visited {
 .nsw-results-bar {
   min-height: 52px;
 }
+
+.nsw-main-nav a {
+  border-bottom: 3px solid transparent;
+}
+.nsw-main-nav a:hover {
+  background: transparent;
+  border-bottom: 3px solid var(--nsw-brand-dark);
+  box-sizing: border-box;
+}
