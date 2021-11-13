@@ -183,27 +183,37 @@
       // The API call was successful!
       return response.json();
       }).then(function (data) {
-      console.log(data);
-      for (const [key, value] of Object.entries(data)) {
-      const listItem = document.createElement("div");
-      listItem.classList = "nsw-list-item";
+        console.log(data);
+        for (const [key, value] of Object.entries(data)) {
+        const listItem = document.createElement("div");
+        listItem.classList = "nsw-list-item";
 
-      const listItemInner = document.createElement("div");
-      listItemInner.classList = "nsw-list-item__content";
+        const listItemInner = document.createElement("div");
+        listItemInner.classList = "nsw-list-item__content";
 
-      const title = document.createElement("div");
-      title.classList = "nsw-list-item__title";
-      title.innerHTML = value.title
-      listItemInner.appendChild(title);
+        const title = document.createElement("div");
+        title.classList = "nsw-list-item__title";
+        title.innerHTML = `<a href="${value.URL}" target="_blank">${value.title}</a>`
+        listItemInner.appendChild(title);
 
-      const synopsis = document.createElement("div");
-      synopsis.classList = "nsw-list-item__copy";
-      synopsis.innerHTML = value.synopsis
-      listItemInner.appendChild(synopsis);
+        const synopsis = document.createElement("div");
+        synopsis.classList = "nsw-list-item__copy";
+        synopsis.innerHTML = value.synopsis
+        listItemInner.appendChild(synopsis);
 
-      listItem.appendChild(listItemInner);
-      document.getElementById("guides").appendChild(listItem);
-      }
+        const tags = document.createElement("div");
+        tags.classList = "nsw-list-item__tags nsw-list nsw-list--8";
+        value.tags.forEach(tagData => {
+          var thisTag = document.createElement("div");
+          thisTag.classList = "nsw-tag";
+          thisTag.innerHTML = tagData.name
+          tags.appendChild(thisTag);
+        });
+        listItemInner.appendChild(tags);
+
+        listItem.appendChild(listItemInner);
+        document.getElementById("guides").appendChild(listItem);
+        }
       }).catch(function (err) {
       // There was an error
       console.warn('Something went wrong.', err);
