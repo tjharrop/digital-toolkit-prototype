@@ -85,100 +85,130 @@
 
     <section class="nsw-section nsw-section--off-white nsw-p-top-lg nsw-p-bottom-lg">
       <div class="nsw-container">
-        <h2>Customer Sentiment Check</h2>
-        <p class="nsw-intro nsw-intro-partial">Sentiment check is a whole of government widget used to capture real-time customer sentiment for digital products or services.</p>
-
+        <h2>Solutions</h2>
+        <div class="nsw-layout">
+          <div class="nsw-layout__main">
+            <p class="nsw-intro">A library of off-the-shelf tech solutions and platforms to help you build things quickly and consistently.</p>
+            <div class="nsw-form__input-group nsw-m-top-lg">
+              <label class="sr-only" for="search-input">Search</label>
+              <input class="nsw-form__input" type="text" id="search-input" name="search-input" value="">
+              <button class="nsw-button nsw-button--dark nsw-button--flex" type="submit">Search</button>
+            </div>
+          </div>
+          <div class="nsw-layout__sidebar nsw-layout__sidebar--desktop"></div>
+        </div>
       </div>
     </section>
 
-      <div class="nsw-container nsw-p-y-lg">
-        <h3>What is Customer Sentiment Check?</h3>
-        <figure class="nsw-media nsw-media--right-40">
-          <img src="https://mysnswdigital.service.nsw.gov.au/themes/custom/snsw/assets/images/dn/dn-img-6.svg" alt="A picture of a black dog">
-        </figure>
-        <p>Sentiment check uses one click to capture customer feedback and comments are optional. Customers can express positive feedback by selecting the thumbs up icon or negative feedback through clicking the thumbs down.</p>
-        <p>Customer sentiment check should be implemented on high volume services, at the end of a process and on important content. </p>
-        <p>The data is shared in real-time with all stakeholders - the executive team, the project team, the BAU support team and the minister’s office – through DOMO dashboards.</p>
-        <h3>When to use</h3>
-        <p class="intro">Sentiment check is most effectively used for services and transactions that have a high volume and a two-way conversation between customer and NSW Government is not necessary.</p>
-        <p>Sentiment check is part of all major programs rolled out by Service NSW in the last two years.</p>
+      <div class="nsw-container">
+        <div class="nsw-layout">
+          <div class="nsw-layout__sidebar nsw-layout__sidebar--desktop">
 
-        <section class="nsw-section nsw-section--box nsw-section--brand-light nsw-border--brand-light nsw-m-top-lg">
-          <!-- START: Section content -->
-          <div class="nsw-container">
-            <div class="nsw-grid">
-              <div class="nsw-col nsw-col-sm-6">
-                <h3>Get Started</h3>
-                <p>Customer Sentiment Check is run by Government Technology Platforms, part of the Department of Customer Service.</p>
-                <div class="nsw-timeline">
-                  <div class="nsw-timeline__item">
-                    <h3>Register</h3>
-                    <div class="nsw-timeline__content">
-                      <p>Fill in the form and send your project details to GTP.</p>
-                    </div>
+            <form class="nsw-filters nsw-filters--fixed js-filters">
+              <div class="nsw-filters__controls active">
+                <button>
+                  <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">tune</span>
+                  <span>Filter results  (2)</span>
+                </button>
+              </div>
+              <div class="nsw-filters__wrapper">
+                <div class="nsw-filters__back">
+                  <button class="nsw-icon-button nsw-icon-button--flex js-close-sub-nav" type="button" aria-expanded="true" aria-controls="sub-nav-">
+                    <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">keyboard_arrow_left</span>
+                    <span>Back</span>
+                  </button>
+                </div>
+                <div class="nsw-filters__title">Filter results</div>
+                <div class="nsw-filters__list">
+
+                  <div class="nsw-filters__item">
+                    <fieldset class="nsw-form__fieldset">
+                      <legend class="nsw-form__legend">Categories</legend>
+                      <input class="nsw-form__checkbox-input" type="checkbox" name="filters-instant-categories" value="Customer Service" id="filters-instant-categories-1">
+                      <label class="nsw-form__checkbox-label" for="filters-instant-categories-1">SaaS Platforms</label>
+                      <input class="nsw-form__checkbox-input" type="checkbox" name="filters-instant-categories" value="Communities and Justice" id="filters-instant-categories-2">
+                      <label class="nsw-form__checkbox-label" for="filters-instant-categories-2">Developer kits</label>
+                      <input class="nsw-form__checkbox-input" type="checkbox" name="filters-instant-categories" value="Education" id="filters-instant-categories-3">
+                      <label class="nsw-form__checkbox-label" for="filters-instant-categories-3">Integrations</label>
+                      <input class="nsw-form__checkbox-input" type="checkbox" name="filters-instant-categories" value="Health" id="filters-instant-categories-4">
+                      <label class="nsw-form__checkbox-label" for="filters-instant-categories-4">Data management</label>
+                    </fieldset>
                   </div>
-                  <div class="nsw-timeline__item">
-                    <h3>Integrate</h3>
-                    <div class="nsw-timeline__content">
-                      <p>Your code will be sent via email, after which your developers can integrate the sentiment check widget.</p>
-                    </div>
-                  </div>
-                  <div class="nsw-timeline__item">
-                    <h3>Test</h3>
-                    <div class="nsw-timeline__content">
-                      <p>Ensure the widget is styled according to your brand, and test the integration with DOMO is working.</p>
-                    </div>
-                  </div>
-                  <div class="nsw-timeline__item">
-                    <h3>Measure!</h3>
-                    <div class="nsw-timeline__content">
-                      <p>Your data is now available on the domo dashboard, and can be used to improve and iterate your product.</p>
-                    </div>
-                  </div>
+
+                </div>
+                <div class="nsw-filters__cancel">
+                  <button type="reset">Clear all filters</button>
                 </div>
               </div>
-              <div class="nsw-col nsw-col-md-5 nsw-offset-md-1">
-                <div class="nsw-form">
-                  <div class="nsw-form__group">
-                    <label class="nsw-form__label" for="form-text-2">Your name</label>
-                    <input class="nsw-form__input" type="text" id="form-text-2" name="form-text-2" aria-describedby="form-text-2-helper-text">
-                  </div>
-                  <div class="nsw-form__group">
-                    <label class="nsw-form__label" for="form-text-3">Product name</label>
-                    <span class="nsw-form__helper" id="form-text-3-helper-text">As it should appear in DOMO</span>
-                    <input class="nsw-form__input" type="text" id="form-text-3" name="form-text-3" aria-describedby="form-text-3-helper-text">
-                  </div>
-                  <div class="nsw-form__group">
-                    <label class="nsw-form__label" for="form-text-4">Staging URL</label>
-                    <span class="nsw-form__helper" id="form-text-4-helper-text">Used for testing</span>
-                    <input class="nsw-form__input" type="text" id="form-text-4" name="form-text-4" aria-describedby="form-text-4-helper-text">
-                  </div>
-                  <div class="nsw-form__group">
-                    <label class="nsw-form__label" for="form-text-5">Live URL</label>
-                    <span class="nsw-form__helper" id="form-text-5-helper-text">URL for your live product</span>
-                    <input class="nsw-form__input" type="text" id="form-text-5" name="form-text-5" aria-describedby="form-text-5-helper-text">
-                  </div>
-                  <div class="nsw-form__group">
-                    <label class="nsw-form__label" for="form-select-1">Your audience</label>
-                    <select class="nsw-form__select" id="form-select-1">
-                      <option value="">Please select</option>
-                      <option value="1">General public</option>
-                      <option value="2">Registered customers</option>
-                      <option value="2">Public Servants</option>
-                      <option value="2">Team only</option>
-                    </select>
-                  </div>
-                  <div class="nsw-form__group nsw-p-top-sm">
-                    <button type="button" class="nsw-button nsw-button--dark">Register</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </form>
+
           </div>
-          <!-- END: Section content -->
-        </section>
+          <main class="nsw-layout__main">
+            <div class="nsw-results-bar">
+              <div class="nsw-results-bar__info">Showing results 1 - 10 of 23 results</div>
+            </div>
+            <div class="nsw-search-results">
+              <div id="guides"></div>
 
+              <nav class="nsw-pagination" aria-label="Pagination">
+                <ul>
+                  <li>
+                    <a class="nsw-icon-button" href="#">
+                      <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">keyboard_arrow_left</span>
+                      <span class="sr-only">Back</span>
+                    </a>
+                  </li>
+                  <li><a class="active" href="#"><span class="sr-only">Page </span>1</a></li>
+                  <li><a href="#"><span class="sr-only">Page </span>2</a></li>
+                  <li><a href="#"><span class="sr-only">Page </span>3</a></li>
+                  <li><span>&hellip;</span></li>
+                  <li><a href="#"><span class="sr-only">Page </span>6</a></li>
+                  <li>
+                    <a class="nsw-icon-button" href="#">
+                      <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">keyboard_arrow_right</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+
+            </div>
+          </main>
+        </div>
       </div>
+
+      <script>
+
+      fetch('https://nsw-design-system-guides.herokuapp.com/guides').then(function (response) {
+      // The API call was successful!
+      return response.json();
+      }).then(function (data) {
+      console.log(data);
+      for (const [key, value] of Object.entries(data)) {
+      const listItem = document.createElement("div");
+      listItem.classList = "nsw-list-item";
+
+      const listItemInner = document.createElement("div");
+      listItemInner.classList = "nsw-list-item__content";
+
+      const title = document.createElement("div");
+      title.classList = "nsw-list-item__title";
+      title.innerHTML = value.title
+      listItemInner.appendChild(title);
+
+      const synopsis = document.createElement("div");
+      synopsis.classList = "nsw-list-item__copy";
+      synopsis.innerHTML = value.synopsis
+      listItemInner.appendChild(synopsis);
+
+      listItem.appendChild(listItemInner);
+      document.getElementById("guides").appendChild(listItem);
+      }
+      }).catch(function (err) {
+      // There was an error
+      console.warn('Something went wrong.', err);
+      });
+      </script>
 
 
 <footer class="nsw-footer">

@@ -40,7 +40,7 @@ layout: default.hbs
                 <div class="nsw-filters__list">
                   <div class="nsw-filters__item">
                     <label class="nsw-form__label" for="filters-all-keyword">Keyword</label>
-                    <input class="nsw-form__input" type="text" id="filters-all-keyword" name="filters-keyword" value="Digital Design System">
+                    <input class="nsw-form__input" type="text" id="filters-all-keyword" name="filters-keyword" value="Personas">
                   </div>
                   <div class="nsw-filters__item">
                     <p class="nsw-form__label nsw-m-bottom-sm">Resources for...</p>
@@ -78,11 +78,11 @@ layout: default.hbs
                     <div class="nsw-list nsw-list--8">
                       <div class="nsw-tag nsw-tag--checkbox">
                         <input type="checkbox" id="checkbox-21" name="tag-input" checked>
-                        <label for="checkbox-21">Personas</label>
+                        <label for="checkbox-21">Product Design</label>
                       </div>
                       <div class="nsw-tag nsw-tag--checkbox">
                         <input type="checkbox" id="checkbox-22" name="tag-input" checked>
-                        <label for="checkbox-22">Prototyping</label>
+                        <label for="checkbox-22">Building a team</label>
                       </div>
                       <div class="nsw-tag nsw-tag--checkbox">
                         <input type="checkbox" id="checkbox-23" name="tag-input" checked="">
@@ -90,7 +90,7 @@ layout: default.hbs
                       </div>
                       <div class="nsw-tag nsw-tag--checkbox">
                         <input type="checkbox" id="checkbox-24" name="tag-input">
-                        <label for="checkbox-24">Human-centred design</label>
+                        <label for="checkbox-24">Human-centred Design</label>
                       </div>
                       <div class="nsw-tag nsw-tag--checkbox">
                         <input type="checkbox" id="checkbox-25" name="tag-input">
@@ -119,8 +119,58 @@ layout: default.hbs
               <div class="nsw-results-bar__info">Showing results 1 - 10 of 23 results</div>
             </div>
             <div class="nsw-search-results">
-              {{> list-item heading="dsada" }}
+              {{> list-item
+                heading="Creating personas"
+                label="Practice manual"
+                link="/resources/creating-personas/"
+                copy="A guide to creating personas including when they should, and shouldn't, be used on NSW Government projects.<br><br><em><strong>by NSW Health Pathology</strong></em>"
+              }}
+
+              {{> list-item
+                heading="Personas 101"
+                label="101 Guide"
+                link="#personas101"
+                copy="An introduction to personas for anyone using them for the first time, or considering using them.<br><br><em><strong>by DesignOps team</strong></em>"
+                tags=(split 'User Research;Human-centred Design;UX Designers;Researchers;Content Designers;Project Managers')
+              }}
+
+              {{> list-item
+                heading="Synthesising research interviews"
+                label="Activity"
+                link="#synthsolo"
+                copy="Build a collective understanding of what you've learned from interviews (and where it could take you).<br><br><em><strong>by Customer Experience Unit</strong></em>"
+              }}
+
+              {{> list-item
+                heading="Persona template example"
+                label="Template"
+                link="#persona-example"
+                copy="A guide to when personas should, and shouldn't, be used.<br><br><em><strong>by DesignOps team</strong></em>"
+              }}
             </div>
+
+            <nav class="nsw-pagination" aria-label="Pagination">
+              <ul>
+                <li>
+                  <a class="nsw-icon-button" href="#">
+                    <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">keyboard_arrow_left</span>
+                    <span class="sr-only">Back</span>
+                  </a>
+                </li>
+                <li><a class="active" href="#"><span class="sr-only">Page </span>1</a></li>
+                <li><a href="#"><span class="sr-only">Page </span>2</a></li>
+                <li><a href="#"><span class="sr-only">Page </span>3</a></li>
+                <li><span>&hellip;</span></li>
+                <li><a href="#"><span class="sr-only">Page </span>6</a></li>
+                <li>
+                  <a class="nsw-icon-button" href="#">
+                    <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">keyboard_arrow_right</span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+
           </main>
         </div>
       </div>

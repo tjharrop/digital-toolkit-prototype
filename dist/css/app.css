@@ -5837,8 +5837,40 @@ a:visited {
   --nsw-focus: var(--nsw-palette-blue-04);
 }
 
-.nsw-intro-partial {
-  max-width: 70%;
+@media (min-width: 48em) {
+  .nsw-intro--partial {
+    max-width: 70%;
+  }
+}
+.standards-list {
+  position: relative;
+  border-radius: var(--nsw-border-radius);
+  cursor: pointer;
+}
+.standards-list:hover {
+  background: var(--nsw-off-white);
+}
+.standards-list:hover .standards-link.nsw-material-icons {
+  color: var(--nsw-palette-grey-02);
+}
+.standards-list:hover .standard-number {
+  color: var(--nsw-brand-supplementary);
+}
+.standards-list .standards-link.nsw-material-icons {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: scale(2) translateY(-25%);
+  color: var(--nsw-palette-grey-03);
+}
+.standards-list .standard-number {
+  font-size: var(--nsw-font-size-xl-desktop);
+  text-align: center;
+  font-weight: var(--nsw-font-bold);
+}
+
+.nsw-intro--tight {
+  margin: 0;
 }
 
 .nsw-timeline {
@@ -5915,4 +5947,22 @@ a:visited {
     flex-direction: row;
     flex-wrap: nowrap;
   }
+}
+.nsw-float--left {
+  float: left;
+}
+.nsw-float--right {
+  float: right;
+}
+
+.nsw-graphic-border {
+  border: 2px solid var(--nsw-palette-grey-02);
+}
+
+.nsw-in-page-note--info-dark {
+  --nsw-status-info-bg: var(--nsw-palette-info-blue);
+  color: var(--nsw-palette-white);
+}
+.nsw-in-page-note--info-dark .nsw-in-page-note__icon {
+  color: var(--nsw-palette-info-blue-bg);
 }

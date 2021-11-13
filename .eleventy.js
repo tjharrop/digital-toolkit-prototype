@@ -5,6 +5,10 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addWatchTarget("./src/_includes/");
 
+  eleventyConfig.addShortcode('split', function(str) {
+    return str.split(';');
+  });
+
   // set input and output folder
   return {
     dir: {
