@@ -22,7 +22,9 @@ function getCookie(cname) {
 
 function checkCookie() {
   let dismissed = getCookie("dismissed");
-  if (dismissed != true) {
+  console.log(dismissed);
+  if (!dismissed) {
+    console.log('dsad');
     let alertMessage = document.createElement("div");
     alertMessage.innerHTML = `
       <div class="nsw-global-alert nsw-global-alert--critical js-global-alert" role="alert" id="proto-warn">
