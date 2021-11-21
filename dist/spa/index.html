@@ -2,6 +2,7 @@
   <head>
     <link rel="stylesheet" href="/css/app.css" />
     <script src="https://cdn.jsdelivr.net/npm/nsw-design-system@3/dist/js/main.min.js"></script>
+    <script src="//unpkg.com/navigo"></script>
     <script src="/js/app.js"></script>
     <title>DST prototype</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,7 +32,7 @@
               </a>
             </div>
             <div class="nsw-header__name">
-              <div class="nsw-header__title">Digital Service Toolkit</div>
+              <div class="nsw-header__title">Design &amp; Technology Resources</div>
             </div>
           </div>
           <div class="nsw-header__menu">
@@ -53,64 +54,63 @@
       </div>
       <ul class="nsw-main-nav__list">
         <li>
-          <a href="/standards/">
-            <span>Standards</span>
-          </a>
-        </li>
-        <li>
           <a href="#">
-            <span>Design Systems</span>
+            <span>UX Tools</span>
           </a>
         </li>
         <li>
           <a href="/solutions/">
-            <span>Solutions</span>
+            <span>Tech solutions</span>
           </a>
         </li>
         <li>
           <a href="/activities/">
-            <span>Activities</span>
+            <span>Design activities</span>
           </a>
         </li>
         <li>
           <a href="/resources/">
-            <span>Resources</span>
+            <span>Guides</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span>Jobs</span>
           </a>
         </li>
         <li>
           <a href="https://community.digital.nsw.gov.au" target="_blank">
-            <span>Community</span>
+            <span>Community forum</span>
           </a>
         </li>
       </ul>
     </nav>
 
-    <section class="nsw-section nsw-section--off-white nsw-p-top-lg nsw-p-bottom-lg">
-      <div class="nsw-container">
-        <h2>Solutions</h2>
-        <div class="nsw-layout">
-          <div class="nsw-layout__main">
-            <p class="nsw-intro">A library of off-the-shelf tech solutions and platforms to help you build things quickly and consistently.</p>
-            <div class="nsw-form__input-group nsw-m-top-lg">
-              <label class="sr-only" for="search-input">Search</label>
-              <input class="nsw-form__input" type="text" id="search-input" name="search-input" value="">
-              <button class="nsw-button nsw-button--dark nsw-button--flex" type="submit">Search</button>
-            </div>
-          </div>
-          <div class="nsw-layout__sidebar nsw-layout__sidebar--desktop"></div>
+<section class="nsw-section nsw-section--off-white nsw-p-top-lg nsw-p-bottom-lg">
+  <div class="nsw-container">
+    <h2>Resources</h2>
+    <div class="nsw-layout">
+      <div class="nsw-layout__main">
+        <p class="nsw-intro">A library of useful things for digital teams and professionals in NSW Government, tagged by topic, role, and category.</p>
+        <div class="nsw-form__input-group nsw-m-top-lg">
+          <label class="sr-only" for="search-input">Search</label>
+          <input class="nsw-form__input" type="text" id="search-input" name="search-input" value="">
+          <button class="nsw-button nsw-button--dark nsw-button--flex" type="submit">Search</button>
         </div>
       </div>
-    </section>
+      <div class="nsw-layout__sidebar nsw-layout__sidebar--desktop"></div>
+    </div>
+  </div>
+</section>
 
       <div class="nsw-container">
         <div class="nsw-layout">
           <div class="nsw-layout__sidebar nsw-layout__sidebar--desktop">
-
             <form class="nsw-filters nsw-filters--fixed js-filters">
               <div class="nsw-filters__controls active">
                 <button>
                   <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">tune</span>
-                  <span>Filter results  (2)</span>
+                  <span>Filter results</span>
                 </button>
               </div>
               <div class="nsw-filters__wrapper">
@@ -122,58 +122,16 @@
                 </div>
                 <div class="nsw-filters__title">Filter results</div>
                 <div class="nsw-filters__list">
-
-                  <div class="nsw-filters__item">
-                    <fieldset class="nsw-form__fieldset">
-                      <legend class="nsw-form__legend">Categories</legend>
-                      <input class="nsw-form__checkbox-input" type="checkbox" name="filters-instant-categories" value="Customer Service" id="filters-instant-categories-1">
-                      <label class="nsw-form__checkbox-label" for="filters-instant-categories-1">SaaS Platforms</label>
-                      <input class="nsw-form__checkbox-input" type="checkbox" name="filters-instant-categories" value="Communities and Justice" id="filters-instant-categories-2">
-                      <label class="nsw-form__checkbox-label" for="filters-instant-categories-2">Developer kits</label>
-                      <input class="nsw-form__checkbox-input" type="checkbox" name="filters-instant-categories" value="Education" id="filters-instant-categories-3">
-                      <label class="nsw-form__checkbox-label" for="filters-instant-categories-3">Integrations</label>
-                      <input class="nsw-form__checkbox-input" type="checkbox" name="filters-instant-categories" value="Health" id="filters-instant-categories-4">
-                      <label class="nsw-form__checkbox-label" for="filters-instant-categories-4">Data management</label>
-                    </fieldset>
-                  </div>
-
-                </div>
-                <div class="nsw-filters__cancel">
-                  <button type="reset">Clear all filters</button>
                 </div>
               </div>
             </form>
-
           </div>
           <main class="nsw-layout__main">
             <div class="nsw-results-bar">
-              <div class="nsw-results-bar__info">Showing results 1 - 10 of 23 results</div>
+              <div class="nsw-results-bar__info"></div>
             </div>
             <div class="nsw-search-results">
               <div id="guides"></div>
-
-              <nav class="nsw-pagination" aria-label="Pagination">
-                <ul>
-                  <li>
-                    <a class="nsw-icon-button" href="#">
-                      <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">keyboard_arrow_left</span>
-                      <span class="sr-only">Back</span>
-                    </a>
-                  </li>
-                  <li><a class="active" href="#"><span class="sr-only">Page </span>1</a></li>
-                  <li><a href="#"><span class="sr-only">Page </span>2</a></li>
-                  <li><a href="#"><span class="sr-only">Page </span>3</a></li>
-                  <li><span>&hellip;</span></li>
-                  <li><a href="#"><span class="sr-only">Page </span>6</a></li>
-                  <li>
-                    <a class="nsw-icon-button" href="#">
-                      <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">keyboard_arrow_right</span>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-
             </div>
           </main>
         </div>
@@ -182,44 +140,108 @@
       <script>
 
       fetch('https://nsw-design-system-guides.herokuapp.com/guides').then(function (response) {
-      // The API call was successful!
-      return response.json();
+        return response.json();
       }).then(function (data) {
-        console.log(data);
+
         for (const [key, value] of Object.entries(data)) {
-        const listItem = document.createElement("div");
-        listItem.classList = "nsw-list-item";
+          const listItem = document.createElement("div");
+          listItem.classList = "nsw-list-item";
 
-        const listItemInner = document.createElement("div");
-        listItemInner.classList = "nsw-list-item__content";
+          const listItemInner = document.createElement("div");
+          listItemInner.classList = "nsw-list-item__content";
 
-        const title = document.createElement("div");
-        title.classList = "nsw-list-item__title";
-        title.innerHTML = `<a href="${value.URL}" target="_blank">${value.title}</a>`
-        listItemInner.appendChild(title);
+          const title = document.createElement("div");
+          title.classList = "nsw-list-item__title";
+          title.innerHTML = `<a href="${value.URL}" target="_blank">${value.title}</a>`
+          listItemInner.appendChild(title);
 
-        const synopsis = document.createElement("div");
-        synopsis.classList = "nsw-list-item__copy";
-        synopsis.innerHTML = value.synopsis
-        listItemInner.appendChild(synopsis);
+          const synopsis = document.createElement("div");
+          synopsis.classList = "nsw-list-item__copy";
+          synopsis.innerHTML = value.synopsis
+          listItemInner.appendChild(synopsis);
 
-        const tags = document.createElement("div");
-        tags.classList = "nsw-list-item__tags nsw-list nsw-list--8";
-        value.tags.forEach(tagData => {
-          var thisTag = document.createElement("div");
-          thisTag.classList = "nsw-tag";
-          thisTag.innerHTML = tagData.name
-          tags.appendChild(thisTag);
-        });
-        listItemInner.appendChild(tags);
+          const tags = document.createElement("div");
+          tags.classList = "nsw-list-item__tags nsw-list nsw-list--8";
+          value.tags.forEach(tagData => {
+            var thisTag = document.createElement("div");
+            thisTag.classList = "nsw-tag";
+            thisTag.innerHTML = tagData.name
+            tags.appendChild(thisTag);
 
-        listItem.appendChild(listItemInner);
-        document.getElementById("guides").appendChild(listItem);
+            var tagId = tagData.id;
+            listItem.setAttribute("data-tag-"+tagData.id,'true');
+          });
+          listItemInner.appendChild(tags);
+
+          listItem.appendChild(listItemInner);
+          document.getElementById("guides").appendChild(listItem);
+
         }
       }).catch(function (err) {
-      // There was an error
-      console.warn('Something went wrong.', err);
+        // There was an error
+        console.warn('Something went wrong listing guides.', err);
       });
+
+
+      fetch('https://nsw-design-system-guides.herokuapp.com/guides/count').then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        document.querySelector(".nsw-results-bar__info").innerHTML = `${data} results`
+      }).catch(function (err) {
+        // There was an error
+        console.warn('Something went wrong counting results.', err);
+      });
+
+
+      fetch('https://nsw-design-system-guides.herokuapp.com/tag-types').then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        for (const [key, tagTypes] of Object.entries(data)) {
+          if(tagTypes.tags.length){
+            const tagGroup = document.createElement("div");
+            tagGroup.classList = "nsw-filters__item";
+            tagGroup.innerHTML = `<p class="nsw-form__label nsw-m-bottom-sm">${tagTypes.name}</p>`;
+            const tagCheckGroup = document.createElement("div");
+            tagCheckGroup.classList = "nsw-list nsw-list--8";
+            tagGroup.append(tagCheckGroup);
+
+            for (const [key, tags] of Object.entries(tagTypes.tags)) {
+              if(tags.guides.length){
+                const checkbox = document.createElement("div");
+                checkbox.classList = "nsw-tag nsw-tag--checkbox";
+                checkbox.innerHTML = `
+                  <input type="checkbox" id="checkbox-${tags.id}" name="${tags.name}" value="tag-${tags.id}" checked>
+                  <label for="checkbox-${tags.id}">${tags.name}</label>
+                `;
+                tagCheckGroup.append(checkbox);
+                document.querySelector(".nsw-filters__list").append(tagGroup);
+              }
+            }
+
+
+          }
+
+        }
+      }).catch(function (err) {
+        // There was an error
+        console.warn('Something went wrong adding checkboxes.', err);
+      });
+
+      document.querySelector(".nsw-filters__list").addEventListener('click', function(e) {
+      	if(e.target.nodeName == 'INPUT') {
+      		if(e.target.checked){
+            displayValue = 'block'
+          } else {
+            displayValue = 'none'
+          }
+          var els = document.querySelectorAll(`[data-${e.target.value}*='true']`)
+          for (var x = 0; x < els.length; x++){
+            els[x].style.display = displayValue;
+          }
+          console.log(els);
+      	}
+      });
+
       </script>
 
 

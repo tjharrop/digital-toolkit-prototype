@@ -1,0 +1,176 @@
+---
+layout: default.hbs
+---
+    <section class="nsw-section nsw-section--off-white nsw-p-top-lg nsw-p-bottom-lg">
+      <div class="nsw-container">
+        <h2>Resources</h2>
+        <div class="nsw-layout">
+          <div class="nsw-layout__main">
+            <p class="nsw-intro">A library of useful things for digital teams and professionals in NSW Government, tagged by topic, role, and category.</p>
+            <div class="nsw-form__input-group nsw-m-top-lg">
+              <label class="sr-only" for="search-input">Search</label>
+              <input class="nsw-form__input" type="text" id="search-input" name="search-input" value="">
+              <button class="nsw-button nsw-button--dark nsw-button--flex" type="submit">Search</button>
+            </div>
+          </div>
+          <div class="nsw-layout__sidebar nsw-layout__sidebar--desktop"></div>
+        </div>
+      </div>
+    </section>
+
+      <div class="nsw-container">
+        <div class="nsw-layout">
+          <div class="nsw-layout__sidebar nsw-layout__sidebar--desktop">
+
+            <form class="nsw-filters nsw-filters--fixed js-filters">
+              <div class="nsw-filters__controls active">
+                <button>
+                  <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">tune</span>
+                  <span>Filter results  (4)</span>
+                </button>
+              </div>
+              <div class="nsw-filters__wrapper">
+                <div class="nsw-filters__back">
+                  <button class="nsw-icon-button nsw-icon-button--flex js-close-sub-nav" type="button" aria-expanded="true" aria-controls="sub-nav-">
+                    <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">keyboard_arrow_left</span>
+                    <span>Back</span>
+                  </button>
+                </div>
+                <div class="nsw-filters__title">Filter results</div>
+                <div class="nsw-filters__list">
+                  <div class="nsw-filters__item">
+                    <label class="nsw-form__label" for="filters-all-keyword">Keyword</label>
+                    <input class="nsw-form__input" type="text" id="filters-all-keyword" name="filters-keyword" value="Personas">
+                  </div>
+                  <div class="nsw-filters__item">
+                    <p class="nsw-form__label nsw-m-bottom-sm">Resources for...</p>
+
+                    <div class="nsw-list nsw-list--8">
+                      <div class="nsw-tag nsw-tag--checkbox">
+                        <input type="checkbox" id="checkbox-1" name="tag-input" checked>
+                        <label for="checkbox-1">UX Designers</label>
+                      </div>
+                      <div class="nsw-tag nsw-tag--checkbox">
+                        <input type="checkbox" id="checkbox-2" name="tag-input" checked>
+                        <label for="checkbox-2">Researchers</label>
+                      </div>
+                      <div class="nsw-tag nsw-tag--checkbox">
+                        <input type="checkbox" id="checkbox-3" name="tag-input" checked="">
+                        <label for="checkbox-3">Policy</label>
+                      </div>
+                      <div class="nsw-tag nsw-tag--checkbox">
+                        <input type="checkbox" id="checkbox-4" name="tag-input">
+                        <label for="checkbox-4">Content Designers</label>
+                      </div>
+                      <div class="nsw-tag nsw-tag--checkbox">
+                        <input type="checkbox" id="checkbox-5" name="tag-input">
+                        <label for="checkbox-5">Branding &amp; comms</label>
+                      </div>
+                      <div class="nsw-tag nsw-tag--checkbox">
+                        <input type="checkbox" id="checkbox-6" name="tag-input">
+                        <label for="checkbox-6">Project managers</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="nsw-filters__item">
+                    <p class="nsw-form__label nsw-m-bottom-sm">Resources about...</p>
+
+                    <div class="nsw-list nsw-list--8">
+                      <div class="nsw-tag nsw-tag--checkbox">
+                        <input type="checkbox" id="checkbox-21" name="tag-input" checked>
+                        <label for="checkbox-21">Product Design</label>
+                      </div>
+                      <div class="nsw-tag nsw-tag--checkbox">
+                        <input type="checkbox" id="checkbox-22" name="tag-input" checked>
+                        <label for="checkbox-22">Building a team</label>
+                      </div>
+                      <div class="nsw-tag nsw-tag--checkbox">
+                        <input type="checkbox" id="checkbox-23" name="tag-input" checked="">
+                        <label for="checkbox-23">User Research</label>
+                      </div>
+                      <div class="nsw-tag nsw-tag--checkbox">
+                        <input type="checkbox" id="checkbox-24" name="tag-input">
+                        <label for="checkbox-24">Human-centred Design</label>
+                      </div>
+                      <div class="nsw-tag nsw-tag--checkbox">
+                        <input type="checkbox" id="checkbox-25" name="tag-input">
+                        <label for="checkbox-25">Branding</label>
+                      </div>
+                      <div class="nsw-tag nsw-tag--checkbox">
+                        <input type="checkbox" id="checkbox-26" name="tag-input">
+                        <label for="checkbox-26">Open Source</label>
+                      </div>
+                      <div class="nsw-tag nsw-tag--checkbox">
+                        <input type="checkbox" id="checkbox-27" name="tag-input">
+                        <label for="checkbox-27">Research Ops</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="nsw-filters__cancel">
+                  <button type="reset">Clear all filters</button>
+                </div>
+              </div>
+            </form>
+
+          </div>
+          <main class="nsw-layout__main">
+            <div class="nsw-results-bar">
+              <div class="nsw-results-bar__info">Showing results 1 - 10 of 23 results</div>
+            </div>
+            <div class="nsw-search-results">
+              {{> list-item
+                heading="Creating personas"
+                label="Practice manual"
+                link="/resources/creating-personas/"
+                copy="A guide to creating personas including when they should, and shouldn't, be used on NSW Government projects.<br><br><em><strong>by NSW Health Pathology</strong></em>"
+              }}
+
+              {{> list-item
+                heading="Personas 101"
+                label="101 Guide"
+                link="#personas101"
+                copy="An introduction to personas for anyone using them for the first time, or considering using them.<br><br><em><strong>by DesignOps team</strong></em>"
+                tags=(split 'User Research;Human-centred Design;UX Designers;Researchers;Content Designers;Project Managers')
+              }}
+
+              {{> list-item
+                heading="Synthesising research interviews"
+                label="Activity"
+                link="#synthsolo"
+                copy="Build a collective understanding of what you've learned from interviews (and where it could take you).<br><br><em><strong>by Customer Experience Unit</strong></em>"
+              }}
+
+              {{> list-item
+                heading="Persona template example"
+                label="Template"
+                link="#persona-example"
+                copy="A guide to when personas should, and shouldn't, be used.<br><br><em><strong>by DesignOps team</strong></em>"
+              }}
+            </div>
+
+            <nav class="nsw-pagination" aria-label="Pagination">
+              <ul>
+                <li>
+                  <a class="nsw-icon-button" href="#">
+                    <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">keyboard_arrow_left</span>
+                    <span class="sr-only">Back</span>
+                  </a>
+                </li>
+                <li><a class="active" href="#"><span class="sr-only">Page </span>1</a></li>
+                <li><a href="#"><span class="sr-only">Page </span>2</a></li>
+                <li><a href="#"><span class="sr-only">Page </span>3</a></li>
+                <li><span>&hellip;</span></li>
+                <li><a href="#"><span class="sr-only">Page </span>6</a></li>
+                <li>
+                  <a class="nsw-icon-button" href="#">
+                    <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">keyboard_arrow_right</span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+
+          </main>
+        </div>
+      </div>

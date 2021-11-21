@@ -2,6 +2,7 @@
   <head>
     <link rel="stylesheet" href="/css/app.css" />
     <script src="https://cdn.jsdelivr.net/npm/nsw-design-system@3/dist/js/main.min.js"></script>
+    <script src="//unpkg.com/navigo"></script>
     <script src="/js/app.js"></script>
     <title>DST prototype</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,7 +32,7 @@
               </a>
             </div>
             <div class="nsw-header__name">
-              <div class="nsw-header__title">Digital Service Toolkit</div>
+              <div class="nsw-header__title">Design &amp; Technology Resources</div>
             </div>
           </div>
           <div class="nsw-header__menu">
@@ -53,185 +54,214 @@
       </div>
       <ul class="nsw-main-nav__list">
         <li>
-          <a href="/standards/">
-            <span>Standards</span>
-          </a>
-        </li>
-        <li>
           <a href="#">
-            <span>Design Systems</span>
+            <span>UX Tools</span>
           </a>
         </li>
         <li>
           <a href="/solutions/">
-            <span>Solutions</span>
+            <span>Tech solutions</span>
           </a>
         </li>
         <li>
           <a href="/activities/">
-            <span>Activities</span>
+            <span>Design activities</span>
           </a>
         </li>
         <li>
           <a href="/resources/">
-            <span>Resources</span>
+            <span>Guides</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span>Jobs</span>
           </a>
         </li>
         <li>
           <a href="https://community.digital.nsw.gov.au" target="_blank">
-            <span>Community</span>
+            <span>Community forum</span>
           </a>
         </li>
       </ul>
     </nav>
 
-    <section class="nsw-section nsw-section--off-white nsw-p-top-lg nsw-p-bottom-lg">
-      <div class="nsw-container">
-        <h2>Solutions</h2>
-        <div class="nsw-layout">
-          <div class="nsw-layout__main">
-            <p class="nsw-intro">A library of off-the-shelf tech solutions and platforms to help you build things quickly and consistently.</p>
-            <div class="nsw-form__input-group nsw-m-top-lg">
-              <label class="sr-only" for="search-input">Search</label>
-              <input class="nsw-form__input" type="text" id="search-input" name="search-input" value="">
-              <button class="nsw-button nsw-button--dark nsw-button--flex" type="submit">Search</button>
-            </div>
-          </div>
-          <div class="nsw-layout__sidebar nsw-layout__sidebar--desktop"></div>
-        </div>
+<section class="nsw-section nsw-section--off-white nsw-p-top-lg nsw-p-bottom-lg">
+  <div class="nsw-container">
+    <h2>Solutions</h2>
+    <div class="nsw-layout">
+      <div class="nsw-layout__main">
+        <p class="nsw-intro">A library of off-the-shelf tech solutions and platforms to help you build things quickly and consistently.</p>
+        <p class="nsw-intro">All solutions listed are open-source and free to use, or created and operated by NSW Government.</p>
       </div>
-    </section>
+      <div class="nsw-layout__sidebar nsw-layout__sidebar--desktop"></div>
+    </div>
+  </div>
+</section>
 
       <div class="nsw-container">
         <div class="nsw-layout">
-          <div class="nsw-layout__sidebar nsw-layout__sidebar--desktop">
-
+          <div class="nsw-layout__sidebar">
             <form class="nsw-filters nsw-filters--fixed js-filters">
               <div class="nsw-filters__controls active">
                 <button>
                   <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">tune</span>
-                  <span>Filter results  (2)</span>
+                  <span>Filter results</span>
                 </button>
               </div>
               <div class="nsw-filters__wrapper">
                 <div class="nsw-filters__back">
                   <button class="nsw-icon-button nsw-icon-button--flex js-close-sub-nav" type="button" aria-expanded="true" aria-controls="sub-nav-">
                     <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">keyboard_arrow_left</span>
-                    <span>Back</span>
+                    <span id="mobile-show">Show results</span>
                   </button>
                 </div>
                 <div class="nsw-filters__title">Filter results</div>
                 <div class="nsw-filters__list">
-
                   <div class="nsw-filters__item">
-                    <fieldset class="nsw-form__fieldset">
-                      <legend class="nsw-form__legend">Categories</legend>
-                      <input class="nsw-form__checkbox-input" type="checkbox" name="filters-instant-categories" value="Customer Service" id="filters-instant-categories-1">
-                      <label class="nsw-form__checkbox-label" for="filters-instant-categories-1">SaaS Platforms</label>
-                      <input class="nsw-form__checkbox-input" type="checkbox" name="filters-instant-categories" value="Communities and Justice" id="filters-instant-categories-2">
-                      <label class="nsw-form__checkbox-label" for="filters-instant-categories-2">Developer kits</label>
-                      <input class="nsw-form__checkbox-input" type="checkbox" name="filters-instant-categories" value="Education" id="filters-instant-categories-3">
-                      <label class="nsw-form__checkbox-label" for="filters-instant-categories-3">Integrations</label>
-                      <input class="nsw-form__checkbox-input" type="checkbox" name="filters-instant-categories" value="Health" id="filters-instant-categories-4">
-                      <label class="nsw-form__checkbox-label" for="filters-instant-categories-4">Data management</label>
-                    </fieldset>
+                    <label class="nsw-form__label" for="filters-all-keyword">Search</label>
+                    <input class="nsw-form__input" type="text" id="filters-all-keyword" name="filters-keyword" value="">
                   </div>
-
-                </div>
-                <div class="nsw-filters__cancel">
-                  <button type="reset">Clear all filters</button>
                 </div>
               </div>
             </form>
-
           </div>
           <main class="nsw-layout__main">
             <div class="nsw-results-bar">
-              <div class="nsw-results-bar__info">Showing results 1 - 10 of 23 results</div>
+              <div class="nsw-results-bar__info"></div>
             </div>
             <div class="nsw-search-results">
-              <div class="nsw-list-item">
-                <div class="nsw-list-item__content">
-                  <div class="nsw-list-item__label">Integration</div>
-                  <div class="nsw-list-item__title"><a href="/solutions/customer-sentiment-check/">Customer Sentiment check</a></div>
-                  <div class="nsw-list-item__copy">This solution is also commonly known as Thumbs-up Thumbs-down (TUTD). Sentiment check is a whole of government widget used to capture real-time customer sentiment for digital products or services.</div>
-                </div>
-              </div>
-
-              <div class="nsw-list-item">
-                <div class="nsw-list-item__content">
-                  <div class="nsw-list-item__label">Integration</div>
-                  <div class="nsw-list-item__title"><a href="https://mysnswdigital.service.nsw.gov.au/log-in-with-service-nsw">Login with Service NSW</a></div>
-                  <div class="nsw-list-item__copy">Give residents simple and secure access to NSW Government services with one set of credentials.</div>
-                </div>
-              </div>
-
-              <div class="nsw-list-item">
-                <div class="nsw-list-item__content">
-                  <div class="nsw-list-item__label">Integration</div>
-                  <div class="nsw-list-item__title"><a href="https://mysnswdigital.service.nsw.gov.au/digital-notifications">Digital Notifications</a></div>
-                  <div class="nsw-list-item__copy">Reach your customers across multiple digital channels with Service NSW Digital Notifications.</div>
-                </div>
-              </div>
-
-              <div class="nsw-list-item">
-                <div class="nsw-list-item__content">
-                  <div class="nsw-list-item__label">Developer kit</div>
-                  <div class="nsw-list-item__title"><a href="https://marketplace.squiz.net/templates/digital-nsw-starter-website-template">NSW Design System for Squiz Matrix</a></div>
-                  <div class="nsw-list-item__copy">The Squiz Matrix Digital.NSW Starter kit for Matrix enables you to quickly build and launch a new website in Squiz Matrix using the Digital Design System.</div>
-                </div>
-              </div>
-
-              <div class="nsw-list-item">
-                <div class="nsw-list-item__content">
-                  <div class="nsw-list-item__label">Integration</div>
-                  <div class="nsw-list-item__title"><a href="https://point.digital.nsw.gov.au/v2/docs/index.html">NSW Point</a></div>
-                  <div class="nsw-list-item__copy">Consistent and reliable address look-ups for your forms. Available as an API you can configure with your existing form fields, or embed the NSW Point Widget for an out of-the-box working model you can integrate directly into your website.</div>
-                </div>
-              </div>
-
-              <div class="nsw-list-item">
-                <div class="nsw-list-item__content">
-                  <div class="nsw-list-item__label">Integration</div>
-                  <div class="nsw-list-item__title"><a href="#cpp">Customer Payments Platform</a></div>
-                  <div class="nsw-list-item__copy">Provides full revenue management from Point-of-sale, fees & receipting, multi-channel payment and shopping cart payment capabilities.</div>
-                </div>
-              </div>
-
-              <div class="nsw-list-item">
-                <div class="nsw-list-item__content">
-                  <div class="nsw-list-item__label">SaaS Platform</div>
-                  <div class="nsw-list-item__title"><a href="#lnsw">Licence.nsw</a></div>
-                  <div class="nsw-list-item__copy">Provides the capability to use web based, or digital-device based, transactions for any legacy paper-based licence transaction.</div>
-                </div>
-              </div>
-
-              <nav class="nsw-pagination" aria-label="Pagination">
-                <ul>
-                  <li>
-                    <a class="nsw-icon-button" href="#">
-                      <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">keyboard_arrow_left</span>
-                      <span class="sr-only">Back</span>
-                    </a>
-                  </li>
-                  <li><a class="active" href="#"><span class="sr-only">Page </span>1</a></li>
-                  <li><a href="#"><span class="sr-only">Page </span>2</a></li>
-                  <li><a href="#"><span class="sr-only">Page </span>3</a></li>
-                  <li><span>&hellip;</span></li>
-                  <li><a href="#"><span class="sr-only">Page </span>6</a></li>
-                  <li>
-                    <a class="nsw-icon-button" href="#">
-                      <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">keyboard_arrow_right</span>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-
+              <div id="soluions"></div>
             </div>
           </main>
         </div>
       </div>
+
+      <script>
+      (function() {
+        var dataset;
+
+        const keywords = document.getElementById("filters-all-keyword");
+
+        if(keywords.value.length==0){
+            var searchParams = new URLSearchParams(window.location.search);
+            query = searchParams.get('q');
+            keywords.value = query;
+            console.log(query)
+        }
+
+        function rePopulate(){
+          document.getElementById("soluions").replaceChildren();
+          populate();
+        }
+
+        function populate(searchStr){
+          var theCount = 0;
+
+          for (const [key, value] of Object.entries(dataset)) {
+            var increment = false;
+
+            const listItem = document.createElement("div");
+            listItem.classList = "nsw-list-item";
+
+            const listItemInner = document.createElement("div");
+            listItemInner.classList = "nsw-list-item__content";
+
+            const label = document.createElement("div");
+            label.classList = "nsw-list-item__label";
+            label.innerHTML = value.solutions_category.Name;
+            listItemInner.appendChild(label);
+
+            const title = document.createElement("div");
+            title.classList = "nsw-list-item__title";
+            title.innerHTML = `<a href="${value.URL}" target="_blank">${value.title}</a>`
+            listItemInner.appendChild(title);
+
+            const synopsis = document.createElement("div");
+            synopsis.classList = "nsw-list-item__copy";
+            synopsis.innerHTML = value.synopsis
+            listItemInner.appendChild(synopsis);
+
+              if(document.getElementById(`filters-categories-${value.solutions_category.id}`).checked){
+                if(keywords.value.length=0 || listItemInner.textContent.toLowerCase().includes(keywords.value.toLowerCase())){
+                  document.getElementById("soluions").appendChild(listItem);
+                  increment = true;
+                }
+
+              }
+
+
+
+            if (increment){theCount++}
+
+            listItem.appendChild(listItemInner);
+            document.querySelector(".nsw-results-bar__info").innerHTML = `${theCount} results`;
+            document.getElementById('mobile-show').innerHTML = `Show ${theCount} results`;
+
+          }
+        }
+
+
+        fetch('https://nsw-design-system-guides.herokuapp.com/solutions-categories').then(function (response) {
+          return response.json();
+        }).then(function (data) {
+          let tagPropPromise = new Promise(function(resolve, reject) {
+            const catGroup = document.createElement("div");
+            catGroup.classList = "nsw-filters__item";
+
+            const catSet = document.createElement("fieldset");
+            catSet.classList = "nsw-form__fieldset";
+            catSet.innerHTML = '<legend class="nsw-form__legend">Categories</legend>';
+
+            catGroup.append(catSet);
+
+            for (const [key, value] of Object.entries(data)) {
+              catSet.innerHTML += `
+                <input checked class="nsw-form__checkbox-input" type="checkbox" name="filters-categories" value="Customer Service" id="filters-categories-${value.id}">
+                <label class="nsw-form__checkbox-label" for="filters-categories-${value.id}">${value.Name}</label>
+                `;
+            }
+
+            document.querySelector(".nsw-filters__list").append(catGroup);
+
+            resolve(); // when successful
+            reject();  // when error
+          });
+
+          tagPropPromise.then(
+            function(value) {
+              fetch('https://nsw-design-system-guides.herokuapp.com/solutions').then(function (response) {
+                return response.json();
+              }).then(function (data) {
+                dataset = data;
+
+                populate();
+
+              }).catch(function (err) {
+                // There was an error
+                console.warn('Something went wrong getting soluions.', err);
+              });
+            },
+            function(error) { /* code if some error */ }
+          )
+        }).catch(function (err) {
+          // There was an error
+          console.warn('Something went wrong adding checkboxes.', err);
+        });
+
+
+
+        document.querySelector(".nsw-filters__list").addEventListener('click', function(e) {
+        	if(e.target.nodeName == 'INPUT') {
+            rePopulate()
+        	}
+        });
+
+        keywords.addEventListener('keyup', function(e) {
+          rePopulate();
+        });
+      })();
+      </script>
 
 
 <footer class="nsw-footer">

@@ -116,6 +116,14 @@ h3 {
   background-color: var(--nsw-brand-supplementary) !important;
 }
 
+.nsw-bg--off-white {
+  background-color: var(--nsw-off-white) !important;
+}
+
+.hover\:nsw-bg--off-white:hover {
+  background-color: var(--nsw-off-white) !important;
+}
+
 .nsw-text--dark {
   color: var(--nsw-text-dark) !important;
 }
@@ -460,43 +468,43 @@ h3 {
 :root {
   --nsw-palette-grey-01: #22272b;
   --nsw-palette-grey-02: #495054;
-  --nsw-palette-grey-03: #c0c6c9;
+  --nsw-palette-grey-03: #cdd3d6;
   --nsw-palette-grey-04: #ebebeb;
   --nsw-palette-green-01: #004000;
   --nsw-palette-green-02: #00aa45;
-  --nsw-palette-green-03: #8deb9c;
+  --nsw-palette-green-03: #a8edb3;
   --nsw-palette-green-04: #dbfadf;
   --nsw-palette-teal-01: #0b3f47;
   --nsw-palette-teal-02: #2e808e;
-  --nsw-palette-teal-03: #8dd6d9;
+  --nsw-palette-teal-03: #8cdbe5;
   --nsw-palette-teal-04: #d1eeea;
   --nsw-palette-blue-01: #002664;
   --nsw-palette-blue-02: #146cfd;
-  --nsw-palette-blue-03: #68d6ff;
+  --nsw-palette-blue-03: #8ce0ff;
   --nsw-palette-blue-04: #cbedfd;
   --nsw-palette-purple-01: #441170;
   --nsw-palette-purple-02: #8055f1;
-  --nsw-palette-purple-03: #c7b9f5;
+  --nsw-palette-purple-03: #cebfff;
   --nsw-palette-purple-04: #e6e1fd;
   --nsw-palette-pink-01: #65004d;
   --nsw-palette-pink-02: #d912ae;
-  --nsw-palette-pink-03: #f4a9e4;
+  --nsw-palette-pink-03: #f4b5e6;
   --nsw-palette-pink-04: #fddef2;
   --nsw-palette-red-01: #630019;
   --nsw-palette-red-02: #d7153a;
-  --nsw-palette-red-03: #f6acb6;
+  --nsw-palette-red-03: #ffb8c1;
   --nsw-palette-red-04: #f3e2e6;
   --nsw-palette-orange-01: #941b00;
   --nsw-palette-orange-02: #f3631b;
-  --nsw-palette-orange-03: #f1c08c;
+  --nsw-palette-orange-03: #ffce99;
   --nsw-palette-orange-04: #fdeddf;
   --nsw-palette-yellow-01: #694800;
   --nsw-palette-yellow-02: #faaf05;
-  --nsw-palette-yellow-03: #fde079;
+  --nsw-palette-yellow-03: #fde79a;
   --nsw-palette-yellow-04: #fff4cf;
   --nsw-palette-brown-01: #523719;
   --nsw-palette-brown-02: #b68d5d;
-  --nsw-palette-brown-03: #d8bea2;
+  --nsw-palette-brown-03: #e8d0b5;
   --nsw-palette-brown-04: #ede3d7;
   --nsw-palette-black: #000000;
   --nsw-palette-white: #ffffff;
@@ -628,6 +636,16 @@ h3 {
     padding-bottom: 2rem;
   }
 }
+.nsw-grid--flush {
+  margin-top: -0.5rem;
+  margin-bottom: -0.5rem;
+}
+@media (min-width: 48rem) {
+  .nsw-grid--flush {
+    margin-top: -1rem;
+    margin-bottom: -1rem;
+  }
+}
 .nsw-grid-overlay {
   position: fixed;
   right: 0;
@@ -653,6 +671,12 @@ h3 {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+}
+@media (min-width: 62rem) {
+  .nsw-row--reverse {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
 }
 
 .nsw-col {
@@ -2474,12 +2498,20 @@ a:visited {
 }
 
 .nsw-link--button {
+  font-size: var(--nsw-font-size-sm-mobile);
+  line-height: var(--nsw-line-height-sm-mobile);
   font-weight: var(--nsw-font-bold);
   color: var(--nsw-brand-dark);
   text-decoration: underline;
   background-color: transparent;
   border: 0;
   padding: 0;
+}
+@media (min-width: 62rem) {
+  .nsw-link--button {
+    font-size: var(--nsw-font-size-sm-desktop);
+    line-height: var(--nsw-line-height-sm-desktop);
+  }
 }
 .nsw-link--button:hover {
   background-color: var(--nsw-text-hover);
@@ -2491,6 +2523,16 @@ a:visited {
 }
 .nsw-link--button:visited {
   color: var(--nsw-text-visited);
+}
+.nsw-link--button.nsw-small {
+  font-size: var(--nsw-font-size-xs-mobile);
+  line-height: var(--nsw-line-height-xs-mobile);
+}
+@media (min-width: 62rem) {
+  .nsw-link--button.nsw-small {
+    font-size: var(--nsw-font-size-xs-desktop);
+    line-height: var(--nsw-line-height-xs-desktop);
+  }
 }
 .nsw-link--icon {
   display: inline-block;
@@ -3054,8 +3096,7 @@ a:visited {
   overflow: hidden;
   height: 100%;
   color: var(--nsw-text-dark);
-  border-top-left-radius: var(--nsw-border-radius);
-  border-top-right-radius: var(--nsw-border-radius);
+  border-radius: var(--nsw-border-radius);
 }
 .nsw-card:hover {
   color: var(--nsw-text-light);
@@ -3268,6 +3309,43 @@ a:visited {
   height: 6px;
   background-color: var(--nsw-brand-accent);
   transition: background 0.15s ease-in-out;
+}
+@media (min-width: 48rem) {
+  .nsw-card--horizontal {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .nsw-card--horizontal .nsw-card__content {
+    flex: 1 1 50%;
+    height: auto;
+  }
+  .nsw-card--horizontal .nsw-card__content > .nsw-material-icons {
+    left: calc(50% + 1rem);
+  }
+  .nsw-card--horizontal .nsw-card__image {
+    flex: 1 1 50%;
+    position: relative;
+    height: auto;
+  }
+  .nsw-card--horizontal .nsw-card__image + .nsw-card__content {
+    border-top-right-radius: var(--nsw-border-radius);
+    border-bottom-left-radius: 0;
+    border-top-width: 1px;
+    border-left-width: 0;
+  }
+  .nsw-card--horizontal.nsw-card--highlight .nsw-card__image::after {
+    top: 0;
+    bottom: 0;
+    left: auto;
+    right: -6px;
+    width: 6px;
+    height: auto;
+  }
+}
+@media (min-width: 62rem) {
+  .nsw-card--horizontal .nsw-card__content > .nsw-material-icons {
+    left: calc(50% + 2rem);
+  }
 }
 
 .nsw-content-block__title {
@@ -3784,7 +3862,8 @@ a:visited {
 }
 .nsw-form__label + input,
 .nsw-form__label + textarea,
-.nsw-form__label + select {
+.nsw-form__label + select,
+.nsw-form__label + .nsw-form__input-group {
   margin-top: 0.25rem;
 }
 .nsw-form__required::after {
@@ -4351,6 +4430,7 @@ a:visited {
 }
 .nsw-header__name {
   padding: 0.75rem 0;
+  color: var(--nsw-brand-dark);
 }
 @media (min-width: 62rem) {
   .nsw-header__name {
@@ -4362,6 +4442,7 @@ a:visited {
   font-size: var(--nsw-font-size-lg-mobile);
   line-height: var(--nsw-line-height-lg-mobile);
   font-weight: var(--nsw-font-bold);
+  color: var(--nsw-brand-dark);
   display: flex;
   align-items: center;
 }
@@ -4377,6 +4458,7 @@ a:visited {
 .nsw-header__description {
   font-size: var(--nsw-font-size-xs-mobile);
   line-height: var(--nsw-line-height-xs-mobile);
+  color: var(--nsw-brand-dark);
 }
 @media (min-width: 62rem) {
   .nsw-header__description {
@@ -4771,6 +4853,62 @@ a:visited {
   padding: 0;
 }
 
+.nsw-in-page-alert, .nsw-in-page-note {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  position: relative;
+  border-left: solid 6px var(--nsw-brand-accent);
+  background-color: var(--nsw-grey-04);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.nsw-in-page-alert:first-child, .nsw-in-page-note:first-child {
+  margin-top: 0;
+}
+@media (min-width: 48rem) {
+  .nsw-in-page-alert, .nsw-in-page-note {
+    margin-top: 2rem;
+  }
+}
+@media (min-width: 48rem) {
+  .nsw-in-page-alert, .nsw-in-page-note {
+    padding: 1.5rem 1.5rem 1.5rem 1rem;
+  }
+}
+.nsw-in-page-alert__icon {
+  font-size: 2.25rem;
+  margin-right: 1rem;
+}
+.nsw-in-page-alert--info {
+  background-color: var(--nsw-status-info-bg);
+  border-color: var(--nsw-status-info);
+}
+.nsw-in-page-alert--info .nsw-in-page-alert__icon {
+  color: var(--nsw-status-info);
+}
+.nsw-in-page-alert--success {
+  background-color: var(--nsw-status-success-bg);
+  border-color: var(--nsw-status-success);
+}
+.nsw-in-page-alert--success .nsw-in-page-alert__icon {
+  color: var(--nsw-status-success);
+}
+.nsw-in-page-alert--warning {
+  background-color: var(--nsw-status-warning-bg);
+  border-color: var(--nsw-status-warning);
+}
+.nsw-in-page-alert--warning .nsw-in-page-alert__icon {
+  color: var(--nsw-status-warning);
+}
+.nsw-in-page-alert--error {
+  background-color: var(--nsw-status-error-bg);
+  border-color: var(--nsw-status-error);
+}
+.nsw-in-page-alert--error .nsw-in-page-alert__icon {
+  color: var(--nsw-status-error);
+}
+
 .nsw-in-page-nav {
   margin-top: 1.5rem;
   padding: 1rem;
@@ -4804,62 +4942,6 @@ a:visited {
 .nsw-in-page-nav li {
   display: block;
   margin-top: 1rem;
-}
-
-.nsw-in-page-note {
-  margin-top: 1.5rem;
-  padding: 1rem;
-  position: relative;
-  border-left: solid 6px var(--nsw-brand-accent);
-  background-color: var(--nsw-grey-04);
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-}
-.nsw-in-page-note:first-child {
-  margin-top: 0;
-}
-@media (min-width: 48rem) {
-  .nsw-in-page-note {
-    margin-top: 2rem;
-  }
-}
-@media (min-width: 48rem) {
-  .nsw-in-page-note {
-    padding: 1.5rem 1.5rem 1.5rem 1rem;
-  }
-}
-.nsw-in-page-note__icon {
-  font-size: 2.25rem;
-  margin-right: 1rem;
-}
-.nsw-in-page-note--info {
-  background-color: var(--nsw-status-info-bg);
-  border-color: var(--nsw-status-info);
-}
-.nsw-in-page-note--info .nsw-in-page-note__icon {
-  color: var(--nsw-status-info);
-}
-.nsw-in-page-note--success {
-  background-color: var(--nsw-status-success-bg);
-  border-color: var(--nsw-status-success);
-}
-.nsw-in-page-note--success .nsw-in-page-note__icon {
-  color: var(--nsw-status-success);
-}
-.nsw-in-page-note--warning {
-  background-color: var(--nsw-status-warning-bg);
-  border-color: var(--nsw-status-warning);
-}
-.nsw-in-page-note--warning .nsw-in-page-note__icon {
-  color: var(--nsw-status-warning);
-}
-.nsw-in-page-note--error {
-  background-color: var(--nsw-status-error-bg);
-  border-color: var(--nsw-status-error);
-}
-.nsw-in-page-note--error .nsw-in-page-note__icon {
-  color: var(--nsw-status-error);
 }
 
 .nsw-link-list {
@@ -5746,6 +5828,12 @@ a:visited {
   outline-offset: 0;
   outline-offset: 3px;
 }
+.nsw-tabs__content--flush {
+  padding: 0;
+}
+.nsw-tabs__content--no-border {
+  border-bottom: 0;
+}
 
 .nsw-tag {
   font-size: var(--nsw-font-size-xs-mobile);
@@ -5959,11 +6047,11 @@ a:visited {
   border: 2px solid var(--nsw-palette-grey-02);
 }
 
-.nsw-in-page-note--info-dark {
+.nsw-in-page-alert--info-dark {
   --nsw-status-info-bg: var(--nsw-palette-info-blue);
   color: var(--nsw-palette-white);
 }
-.nsw-in-page-note--info-dark .nsw-in-page-note__icon {
+.nsw-in-page-alert--info-dark .nsw-in-page-alert__icon {
   color: var(--nsw-palette-info-blue-bg);
 }
 
@@ -6175,5 +6263,28 @@ a:visited {
     margin: 2rem 0rem 0rem 0rem;
     bottom: 1.8125rem;
     left: 1.75rem;
+  }
+}
+.nsw-placeholder__item {
+  animation-duration: 1.25s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: var(--nsw-palette-grey-03);
+  background: linear-gradient(to right, var(--nsw-palette-grey-04) 10%, var(--nsw-palette-grey-03) 18%, var(--nsw-palette-grey-04) 33%);
+  background-size: 800px 800px;
+  color: transparent;
+}
+.nsw-placeholder__item--block {
+  display: block;
+}
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -300px 0;
+  }
+  100% {
+    background-position: 300px 0;
   }
 }
