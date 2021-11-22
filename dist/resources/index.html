@@ -258,15 +258,13 @@
               thisTag.classList = "nsw-tag";
               thisTag.innerHTML = tagData.name
               tags.appendChild(thisTag);
-
-              if(document.getElementById(`checkbox-${tagData.id}`).checked){
+              console.log(document.querySelectorAll(`.nsw-tag--checkbox input:checked`).length);
+              if((document.querySelectorAll(`.nsw-tag--checkbox input:checked`).length==0) || document.getElementById(`checkbox-${tagData.id}`).checked){
                 if(keywords.value.length=0 || listItemInner.textContent.toLowerCase().includes(keywords.value.toLowerCase())){
                   document.getElementById("guides").appendChild(listItem);
                   increment = true;
                 }
-
               }
-
             });
 
             if (increment){theCount++}
@@ -297,7 +295,7 @@
                     const checkbox = document.createElement("div");
                     checkbox.classList = "nsw-tag nsw-tag--checkbox";
                     checkbox.innerHTML = `
-                      <input type="checkbox" id="checkbox-${tags.id}" name="${tags.name}" value="tag-${tags.id}" checked>
+                      <input type="checkbox" id="checkbox-${tags.id}" name="${tags.name}" value="tag-${tags.id}">
                       <label for="checkbox-${tags.id}">${tags.name}</label>
                     `;
                     tagCheckGroup.append(checkbox);
