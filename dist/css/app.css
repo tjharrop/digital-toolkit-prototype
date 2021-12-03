@@ -5927,6 +5927,11 @@ a:visited {
   text-align: center;
 }
 
+.nsw-tag--filled {
+  background-color: var(--nsw-brand-dark);
+  color: var(--nsw-text-light);
+}
+
 .nsw-results-bar {
   min-height: 52px;
 }
