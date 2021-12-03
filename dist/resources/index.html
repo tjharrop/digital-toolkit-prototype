@@ -32,7 +32,7 @@
               </a>
             </div>
             <div class="nsw-header__name">
-              <div class="nsw-header__title">Design &amp; Technology Resources</div>
+              <div class="nsw-header__title">Design &amp; Technology Resources <span class="nsw-tag nsw-tag--beta">BETA</span></div>
             </div>
           </div>
           <div class="nsw-header__menu">
@@ -54,8 +54,8 @@
       </div>
       <ul class="nsw-main-nav__list">
         <li>
-          <a href="#">
-            <span>UX Tools</span>
+          <a href="/design-systems/">
+            <span>Design systems</span>
           </a>
         </li>
         <li>
@@ -64,13 +64,8 @@
           </a>
         </li>
         <li>
-          <a href="/activities/">
-            <span>Design activities</span>
-          </a>
-        </li>
-        <li>
           <a href="/resources/">
-            <span>Guides</span>
+            <span>Methods</span>
           </a>
         </li>
         <li>
@@ -83,6 +78,16 @@
             <span>Community forum</span>
           </a>
         </li>
+        <li>
+          <a href="https://community.digital.nsw.gov.au" class="icon-nav-item">
+            <span>
+              <span class="material-icons">
+                add_circle
+              </span>
+              Add resources
+            </span>
+          </a>
+        </li>
       </ul>
     </nav>
 
@@ -93,10 +98,10 @@
         <template id="listing-page">
           <section class="nsw-section nsw-section--off-white nsw-p-top-lg nsw-p-bottom-lg">
             <div class="nsw-container">
-              <h2>Resources</h2>
+              <h2>Methods</h2>
               <div class="nsw-layout">
                 <div class="nsw-layout__main">
-                  <p class="nsw-intro">A library of useful things for digital teams and professionals in NSW Government, tagged by topic, role, and category.</p>
+                  <p class="nsw-intro">A library of methods, playbooks, and templates organised by practice, type, and topic.</p>
                 </div>
                 <div class="nsw-layout__sidebar nsw-layout__sidebar--desktop"></div>
               </div>
@@ -105,7 +110,7 @@
           <div class="nsw-container">
             <div class="nsw-layout">
               <div class="nsw-layout__sidebar">
-                <form class="nsw-filters nsw-filters--fixed js-filters">
+                <div class="nsw-filters nsw-filters--fixed js-filters">
                   <div class="nsw-filters__controls active">
                     <button>
                       <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">tune</span>
@@ -122,12 +127,16 @@
                     <div class="nsw-filters__title">Filter results</div>
                     <div class="nsw-filters__list">
                       <div class="nsw-filters__item">
-                        <label class="nsw-form__label" for="filters-all-keyword">Search</label>
-                        <input class="nsw-form__input" type="text" id="filters-all-keyword" name="filters-keyword" value="">
+                        <div class="nsw-form__input-group nsw-form__input-group--icon nsw-form__input-group--large">
+                          <label class="sr-only" for="form-input-group-icon-1">Search</label>
+                          <input class="nsw-form__input" type="text" id="filters-all-keyword" name="filters-all-keyword" value="">
+                          <button class="nsw-button nsw-button--dark nsw-button--flex" id="keywordSubmit" type="button"><span class="material-icons nsw-material-icons nsw-text--light" focusable="false" aria-hidden="true">search</span></button>
+                        </div>
+
                       </div>
                     </div>
                   </div>
-                </form>
+                </div>
               </div>
               <main class="nsw-layout__main">
                 <div class="nsw-results-bar">
@@ -163,6 +172,19 @@
             </div>
           </section>
         </template>
+        <template id="list-item">
+          <div class="nsw-list-item">
+            <div class="nsw-list-item__content">
+              <div class="nsw-list-item__label"></div>
+              <div class="nsw-list-item__title"><a href="#"></a></div>
+              <div class="nsw-list-item__copy"></div>
+              <div class="nsw-list-item__tags">
+                <div class="nsw-list nsw-list--8">
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
 
       <script>
 
@@ -171,21 +193,18 @@
 
       window.addEventListener("load", () => {
         router.on("/:id/:name", (match) => {
-          console.log(match);
           unload();
           articlePage(match.data.id);
           window.NSW.initSite()
         })
 
         .on('/', (match) => {
-          console.log(match);
           unload();
           listingPage();
           window.NSW.initSite()
         })
 
         .on(pagePath, (match) => {
-          console.log(match);
           unload();
           router.navigate('/');
         })
@@ -193,18 +212,24 @@
         .resolve();
       });
 
+      const articleTemplate = document.getElementById('content-page');
+      const listingTemplate = document.getElementById('listing-page');
+      const listItemTemplate = document.getElementById('list-item');
+      const pageContainer = document.getElementById("contentContainer");
+      const articleBodyId = 'article-content';
+      const tagQuerySelector = ".nsw-tag--checkbox input";
+      const keywordsInputId = "filters-all-keyword";
+      const listWrapperId = "guides";
+
+      const strapiURL = 'https://nsw-design-system-guides.herokuapp.com';
+
       function listingPage() {
-        var dataset;
+        let dataset;
 
-        function process(value) {
-          return value == undefined ? '' : value.replace(/[^a-z0-9_]+/gi, '-').replace(/^-|-$/g, '').toLowerCase();
-        }
+        const clone = listingTemplate.content.cloneNode(true);
+        pageContainer.appendChild(clone);
 
-        var template = document.querySelector('#listing-page');
-        var clone = template.content.cloneNode(true);
-        document.getElementById("contentContainer").appendChild(clone);
-
-        const keywords = document.getElementById("filters-all-keyword");
+        const keywords = document.getElementById(keywordsInputId);
 
         if(keywords.value.length==0){
             var searchParams = new URLSearchParams(window.location.search);
@@ -213,55 +238,46 @@
         }
 
         function rePopulate(){
-          document.getElementById("guides").replaceChildren();
+          document.getElementById(listWrapperId).replaceChildren();
           populate();
         }
 
         function populate(searchStr){
+
           var theCount = 0;
+          const selectedTags = document.querySelectorAll(`${tagQuerySelector}:checked`);
 
           for (const [key, value] of Object.entries(dataset)) {
             let increment = false;
-            let URL
+            let URL;
+            let checkedTags = activeTags(selectedTags);
+
+            const listItem = listItemTemplate.content.cloneNode(true);
 
             if(value.URL){
-              URL = value.URL
-              titleLink = `<a href="${URL}" target="_blank">${value.title}</a>`;
+              listItem.querySelector(".nsw-list-item__title a").href = value.URL
             } else {
-              name = process(value.title);
-              URL = `${pagePath}#/${value.id}/${name}`;
-              titleLink = `<a href="${URL}" data-internal="${URL}">${value.title}</a>`;
+              const name = process(value.title);
+              const URL = `${pagePath}#/${value.id}/${name}`
+              listItem.querySelector(".nsw-list-item__title a").href = URL;
+              listItem.querySelector(".nsw-list-item__title a").dataset.internal = URL;
             }
 
-            const listItem = document.createElement("div");
-            listItem.classList = "nsw-list-item";
+            listItem.querySelector(".nsw-list-item__label").textContent = value.Author;
+            listItem.querySelector(".nsw-list-item__title a").textContent = value.title;
+            listItem.querySelector(".nsw-list-item__copy").textContent = value.synopsis;
 
-            const listItemInner = document.createElement("div");
-            listItemInner.classList = "nsw-list-item__content";
-
-            const title = document.createElement("div");
-            title.classList = "nsw-list-item__title";
-            title.innerHTML = titleLink
-            listItemInner.appendChild(title);
-
-            const synopsis = document.createElement("div");
-            synopsis.classList = "nsw-list-item__copy";
-            synopsis.innerHTML = value.synopsis
-            listItemInner.appendChild(synopsis);
-
-            const tags = document.createElement("div");
-            tags.classList = "nsw-list-item__tags nsw-list nsw-list--8";
-            listItemInner.appendChild(tags);
+            const tags = listItem.querySelector(".nsw-list-item__tags .nsw-list");
 
             value.tags.forEach(tagData => {
               var thisTag = document.createElement("div");
               thisTag.classList = "nsw-tag";
               thisTag.innerHTML = tagData.name
               tags.appendChild(thisTag);
-              console.log(document.querySelectorAll(`.nsw-tag--checkbox input:checked`).length);
-              if((document.querySelectorAll(`.nsw-tag--checkbox input:checked`).length==0) || document.getElementById(`checkbox-${tagData.id}`).checked){
-                if(keywords.value.length=0 || listItemInner.textContent.toLowerCase().includes(keywords.value.toLowerCase())){
-                  document.getElementById("guides").appendChild(listItem);
+
+              if((checkedTags.length==0) || checkedTags.includes(`tag-${tagData.id}`)){
+                if(keywords.value.length=0 || listItem.textContent.toLowerCase().includes(keywords.value.toLowerCase())){
+                  document.getElementById(listWrapperId).appendChild(listItem);
                   increment = true;
                 }
               }
@@ -269,7 +285,6 @@
 
             if (increment){theCount++}
 
-            listItem.appendChild(listItemInner);
             document.querySelector(".nsw-results-bar__info").innerHTML = `${theCount} results`;
             document.getElementById('mobile-show').innerHTML = `Show ${theCount} results`;
 
@@ -277,7 +292,7 @@
         }
 
 
-        fetch('https://nsw-design-system-guides.herokuapp.com/tag-types').then(function (response) {
+        fetch(`${strapiURL}/tag-types`).then(function (response) {
           return response.json();
         }).then(function (data) {
           let tagPropPromise = new Promise(function(resolve, reject) {
@@ -295,17 +310,14 @@
                     const checkbox = document.createElement("div");
                     checkbox.classList = "nsw-tag nsw-tag--checkbox";
                     checkbox.innerHTML = `
-                      <input type="checkbox" id="checkbox-${tags.id}" name="${tags.name}" value="tag-${tags.id}">
-                      <label for="checkbox-${tags.id}">${tags.name}</label>
+                      <input type="checkbox" id="tag-${tags.id}" name="${tags.name}" value="tag-${tags.id}">
+                      <label for="tag-${tags.id}">${tags.name}</label>
                     `;
                     tagCheckGroup.append(checkbox);
                     document.querySelector(".nsw-filters__list").append(tagGroup);
                   }
                 }
-
-
               }
-
             }
             resolve(); // when successful
             reject();  // when error
@@ -313,7 +325,7 @@
 
           tagPropPromise.then(
             function(value) {
-              fetch('https://nsw-design-system-guides.herokuapp.com/guides').then(function (response) {
+              fetch(`${strapiURL}/guides`).then(function (response) {
                 return response.json();
               }).then(function (data) {
                 dataset = data;
@@ -338,28 +350,34 @@
         	}
         });
 
-        document.querySelector("#guides").addEventListener('click', function(e) {
+        // If it's a local link (identified by dataset.internal override browser behaviour)
+        document.getElementById(listWrapperId).addEventListener('click', function(e) {
         	if(e.target.dataset.internal) {
             navigate(e.target.dataset.internal);
             return false;
         	}
         });
 
-        keywords.addEventListener('keyup', function(e) {
+        document.getElementById('keywordSubmit').addEventListener('click', function(e) {
           rePopulate();
+        });
+
+        keywords.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            rePopulate();
+          }
         });
       };
 
       function articlePage(id){
-          fetch('https://nsw-design-system-guides.herokuapp.com/guides/' + id).then(function (response) {
+          fetch(`${strapiURL}/guides/${id}`).then(function (response) {
             return response.json();
           }).then(function (data) {
 
-            var template = document.querySelector('#content-page');
-            var clone = template.content.cloneNode(true);
-            document.getElementById("contentContainer").appendChild(clone);
+            var clone = articleTemplate.content.cloneNode(true);
+            pageContainer.appendChild(clone);
 
-            document.getElementById('article-content').innerHTML = data.content
+            document.getElementById(articleBodyId).innerHTML = data.content
 
           }).catch(function (err) {
             // There was an error
@@ -368,13 +386,30 @@
       };
 
       function unload(){
-        document.getElementById('contentContainer').innerHTML="";
+        pageContainer.innerHTML="";
       };
 
       function navigate(url){
         unload();
         router.navigate(url);
       }
+
+      function activeTags(checkboxes) {
+        var checked = [];
+
+        for (var i = 0; i < checkboxes.length; i++) {
+          var checkbox = checkboxes[i];
+          if (checkbox.checked) checked.push(checkbox.value);
+        }
+
+        return checked;
+      }
+
+      function process(value) {
+        return value == undefined ? '' : value.replace(/[^a-z0-9_]+/gi, '-').replace(/^-|-$/g, '').toLowerCase();
+      }
+
+
       </script>
 
 

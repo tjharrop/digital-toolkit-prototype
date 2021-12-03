@@ -2,37 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
-
-.nsw-main-nav {
-  --nsw-off-white: var(--nsw-palette-white)
-}
- .nsw-use-supplementary {
-   --nsw-brand-dark: var(--nsw-brand-supplementary);
- }
-.nsw-results-bar {
-  min-height:52px;
-}
-.nsw-main-nav a {
-  border-bottom: 3px solid transparent;
-  &:hover {
-    background: transparent;
-    border-bottom: 3px solid var(--nsw-brand-dark);
-    box-sizing: border-box;
-  }
-}
-.nsw-footer__built {
-  flex: none;
-}
-.nsw-section--brand-supplementary {
-  --nsw-text-hover: var(--nsw-palette-off-white);
-  --nsw-focus: var(--nsw-palette-blue-04);
-}
-
-@media (min-width:48em) {
-  .nsw-intro--partial {
-    max-width: 70%;
-  }
-}
+@import 'styles/helpers.scss';
+@import 'styles/overrides.scss';
+@import 'styles/timeline.scss';
+@import 'styles/rats.scss';
+@import 'styles/grid-border.scss';
 
 .standards-list {
   position: relative;
@@ -61,7 +35,26 @@
   }
 }
 
+.nsw-main-nav li a.icon-nav-item {
+  background: var(--nsw-brand-supplementary);
+  border-color: var(--nsw-palette-white);
+  color: var(--nsw-palette-white);
+  &:hover {
+    background-image: linear-gradient(rgba(var(--nsw-white-rgb),.15),rgba(var(--nsw-white-rgb),.15));
+  }
+  .material-icons {
+    font-size: 1.5rem;
+    line-height: .625rem;
+    position: relative;
+    top: 0.375rem;
+  }
+}
 
+@media (min-width:62em) {
+  .nsw-main-nav li a.icon-nav-item {
+    margin-left: 2rem;
+  }
+}
 
 // .standards-list {
 //   position: relative;
@@ -88,351 +81,11 @@
 // }
 
 
-.nsw-intro--tight {
-  margin:0;
-}
-
-.nsw-timeline {
-    position: relative;
-    margin-top: 2.25rem
-}
-
-@media (min-width:48em) {
-    .nsw-timeline {
-        margin-top: 2.625rem
-    }
-}
-
-.nsw-timeline:before {
-    content: attr(data-count);
-    position: absolute;
-    left: 1rem;
-    top: 0.25rem;
-    bottom: 0;
-    background-color: var(--nsw-brand-dark);
-    width: .25rem
-}
-
-@media (min-width:48em) {
-    .nsw-timeline:before {
-        width: .375rem;
-        left: 1.5625rem
-    }
-}
-
-.nsw-timeline__item {
-    position: relative;
-    padding-left: 3.25rem;
-    margin-top: 1rem
-}
-
-@media (min-width:48em) {
-    .nsw-timeline__item {
-        padding-left: 5rem;
-        margin-top: 2.25rem
-    }
-}
-
-.nsw-timeline__item:before {
-    content: attr(data-count);
-    position: absolute;
-    left: 0.5rem;
-    top: 0.25rem;
-    border: .25rem solid var(--nsw-brand-dark);
-    width: 1.125rem;
-    height: 1.125rem;
-    background-color: var(--nsw-brand-light);
-    border-radius: 100%
-}
-
-@media (min-width:48em) {
-    .nsw-timeline__item:before {
-        top: 0.125;
-        left: 0.875rem;
-        border-width: .375rem;
-        width: 1.75rem;
-        height: 1.75rem
-    }
-}
-
-.nsw-timeline__item:first-child {
-    margin-top: 0
-}
-
-.nsw-timeline__content {
-    margin-top: 1rem
-}
-
-@media (min-width:48em) {
-    .nsw-timeline__content {
-        margin-top: 1.5rem;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-
-    }
-}
-
-.nsw-float {
-  &--left {
-    float:left;
-  }
-  &--right {
-    float: right;
-  }
-}
-
-.nsw-graphic-border {
-  border: 2px solid var(--nsw-palette-grey-02);
-}
 
 
-.nsw-in-page-alert--info-dark {
-  --nsw-status-info-bg: var(--nsw-palette-info-blue);
-  color: var(--nsw-palette-white);
-  .nsw-in-page-alert__icon {
-    color: var(--nsw-palette-info-blue-bg);
-  }
-}
 
-.nsw-icon-list {
-    list-style-type: none;
-    padding: 0;
-    margin: .5rem -.5rem -.5rem -.5rem;
-    .nsw-material-icons {
-      position: static;
-    }
-}
-
-.nsw-icon-list:first-child {
-    margin-top: -.5rem
-}
-
-.nsw-icon-list a {
-    font-family: "Montserrat", Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-weight: 600;
-    color: #002664;
-    display: inline-block;
-    font-weight: normal
-}
-
-.nsw-icon-list a:hover {
-    background-color: rgba(0, 133, 179, 0.2);
-    outline: 2px solid rgba(0, 133, 179, 0.2)
-}
-
-.nsw-icon-list a:focus {
-    outline: solid 3px #0085b3;
-    outline-offset: 0
-}
-
-.nsw-icon-list a:active {
-    background-color: #0085b3;
-    color: #fff
-}
-
-.nsw-icon-list li {
-    padding: .5rem;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center
-}
-
-.nsw-icon-list i {
-    font-size: 2rem;
-    margin-right: .5rem
-}
-
-@media (min-width:62em) {
-    .nsw-icon-list--inline {
-        margin-left: -2rem;
-        margin-right: -2rem;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-wrap: wrap;
-        flex-wrap: wrap
-    }
-    .nsw-icon-list--inline li {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem
-    }
-}
-
-@media (min-width:62em) {
-    .nsw-icon-list--spaced {
-        margin-left: -2rem;
-        margin-right: -2rem
-    }
-    .nsw-icon-list--spaced li {
-        padding-left: 2rem;
-        padding-right: 2rem
-    }
-    .nsw-icon-list--spaced i {
-        margin-right: 1rem
-    }
-}
-
-.nsw-icon-list--compact {
-    margin-top: .375rem;
-    margin-bottom: -.125rem
-}
-
-.nsw-icon-list--compact li {
-    padding-top: .125rem;
-    padding-bottom: .125rem
-}
-
-.nsw-icon-list--small {
-    margin-top: -.25rem;
-    margin-bottom: -.25rem
-}
-
-.nsw-icon-list--small li {
-    padding-top: .25rem;
-    padding-bottom: .25rem;
-}
-
-.nsw-icon-list--small i {
-    font-size: 1.5rem
-}
-.nsw-image {
-    width: 100%;
-    height: auto;
-    display: block;
-    border: 0;
-}
-
-.nsw-tag.nsw-tag--featured, .nsw-research .form-radios .form-item .nsw-tag--featured.option, .form-radios .form-item .nsw-research .nsw-tag--featured.option {
-    background-color: #f9be00;
-    color: #333;
-    border: none;
-}
-
-.nsw-card__tags {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    margin: -1rem -.5rem 0 0
-}
-
-.nsw-card__tags span {
-    font-family: "Montserrat", Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-weight: 400;
-    font-size: .875rem;
-    line-height: 1.35;
-    border-radius: .8125rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    margin: 1rem .5rem 0 0;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    color: #fff;
-    text-decoration: none;
-    display: inline-block;
-    background-color: #002664;
-    margin-bottom: 1em
-}
-
-@media (min-width:62em) {
-    .nsw-card__tags span {
-        font-size: .875rem;
-        line-height: 1.35
-    }
-}
-
-.nsw-card--activity .nsw-card__tags span {
-    background-color: #0a7cb9
-}
-
-.nsw-card--presentation .nsw-card__tags span {
-    background-color: #752f8a
-}
-
-.nsw-card--document .nsw-card__tags span {
-    background-color: #4a8217
-}
-
-.nsw-card--featured .nsw-card__tags span {
-    background-color: #f9be00;
-    color: #333
-}
-
-.nsw-card--at__content .nsw-icon-list {
-    padding-top: 1rem
-}
-
-.nsw-card__author {
-    font-size: .875rem;
-    line-height: 1.35;
-    font-weight: bolder;
-    margin: .5rem 0 0
-}
-
-@media (min-width:62em) {
-    .nsw-card--at__author {
-        font-size: .875rem;
-        line-height: 1.35
-    }
-}
-
-.nsw-card--at .nsw-card__icon {
-    margin: 1rem;
-    margin: 1rem 0rem;
-    margin: 1rem 0rem 0rem;
-    margin: 1rem 0rem 0rem 0rem;
-    position: absolute;
-    bottom: .8125rem;
-    left: .8125rem
-}
-
-@media (min-width:62em) {
-    .nsw-card--at .nsw-card__icon {
-        margin: 2rem;
-        margin: 2rem 0rem;
-        margin: 2rem 0rem 0rem;
-        margin: 2rem 0rem 0rem 0rem;
-        bottom: 1.8125rem;
-        left: 1.75rem
-    }
-}
-
-
-.nsw-placeholder {
-  &__item {
-    animation-duration: 1.25s;
-    animation-fill-mode: forwards;
-    animation-iteration-count: infinite;
-    animation-name: placeHolderShimmer;
-    animation-timing-function: linear;
-    background: var(--nsw-palette-grey-03);
-    background: linear-gradient(to right, var(--nsw-palette-grey-04) 10%, var(--nsw-palette-grey-03) 18%, var(--nsw-palette-grey-04) 33%);
-    background-size: 800px 800px;
-    color: transparent;
-    &--block {
-      display: block;
-    }
-  }
-}
-
-@keyframes placeHolderShimmer{
-    0%{
-        background-position: -300px 0
-    }
-    100%{
-        background-position: 300px 0
-    }
-}
-
-.nsw-in-page-note {
-  @extend .nsw-in-page-alert
-}
+// .nsw-tag.nsw-tag--beta {
+//   color: var(--nsw-text-dark);
+//   border-color: var(--nsw-palette-yellow-02);
+//   background: var(--nsw-palette-yellow-02);
+// }

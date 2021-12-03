@@ -31,7 +31,7 @@ function checkCookie() {
         <div class="nsw-global-alert__wrapper">
           <div class="nsw-global-alert__content">
             <div class="nsw-global-alert__title">This is a prototype</div>
-            <p>You're currently using a prototype of the NSW Design &amp; Technology resources website which is for demonstration and testing only.</p>
+            <p>You're currently using a prototype of the NSW UX &amp; Technology resources library which is for demonstration and testing only.</p>
           </div>
           <button class="nsw-icon-button js-close-alert" type="button" aria-expanded="true" id="close-global">
             <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">close</span>
