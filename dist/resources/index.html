@@ -282,8 +282,8 @@
               let checkedSiblingTags = activeTags(siblingTags);
               console.log(`checked ones: ${checkedSiblingTags}`)
 
-              if (checkedSiblingTags.includes(`tag-${tagData.id}`)==0) {
-                  //increment = true;
+              if (checkedSiblingTags.length==0) {
+                  increment = true;
               } else if(checkedSiblingTags.includes(`tag-${tagData.id}`)){
                 if(keywords.value.length=0 || listItem.textContent.toLowerCase().includes(keywords.value.toLowerCase())){
                   //document.getElementById(listWrapperId).appendChild(listItem);
@@ -291,8 +291,8 @@
                   if(checkedTags.includes(`tag-${tagData.id}`)){thisTag.classList.add("nsw-tag--filled")}
                 }
               }
-              if ((checkedSiblingTags.length>0) && !checkedSiblingTags.includes(`tag-${tagData.id}`)){
-                hide = true; console.log('!!!!!!!!!!!!!! hide ' + value.title);
+              if ((checkedSiblingTags.length>0) && checkedSiblingTags.includes(`tag-${tagData.id}`)){
+                //increment = true; console.log('!!!!!!!!!!!!!! hide ' + value.title);
               }
             });
 
