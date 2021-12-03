@@ -1,0 +1,36 @@
+.nsw-grid--border .nsw-col {
+  position: relative;
+}
+
+.nsw-grid--border .nsw-col:not(:first-child) {
+  padding-top: 1rem;
+}
+
+@media (min-width: 62em) {
+  .nsw-grid--border .nsw-col:not(:first-child) {
+    padding-top: 1rem;
+    padding-left: 2rem;
+  }
+}
+.nsw-grid--border .nsw-col:not(:first-child):after {
+  content: attr(data-count);
+  height: 1px;
+  position: absolute;
+  top: 0;
+  left: 1rem;
+  right: 1rem;
+  background-color: var(--nsw-palette-grey-04);
+}
+
+@media (min-width: 62em) {
+  .nsw-grid--border .nsw-col:not(:first-child):after {
+    width: 1px;
+    height: auto;
+    right: auto;
+    left: 0;
+    bottom: 0;
+  }
+}
+.nsw-grid--border .nsw-col:not(:last-child) {
+  padding-bottom: 1rem;
+}

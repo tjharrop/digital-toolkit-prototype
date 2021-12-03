@@ -1,0 +1,32 @@
+.nsw-main-nav {
+  --nsw-off-white: var(--nsw-palette-white)
+}
+ .nsw-use-supplementary {
+   --nsw-brand-dark: var(--nsw-brand-supplementary);
+ }
+
+ @media (min-width:48em) {
+   .nsw-intro--partial {
+     max-width: 70%;
+   }
+ }
+
+ .nsw-intro--tight {
+   margin:0;
+ }
+
+ .nsw-float {
+   &--left {
+     float:left;
+   }
+   &--right {
+     float: right;
+   }
+ }
+
+ .nsw-graphic-border {
+   border: 2px solid var(--nsw-palette-grey-02);
+ }
+.nsw-center-align {
+  text-align: center;
+}

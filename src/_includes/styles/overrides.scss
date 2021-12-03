@@ -1,0 +1,22 @@
+.nsw-results-bar {
+  min-height:52px;
+}
+.nsw-main-nav a {
+  border-bottom: 3px solid transparent;
+  &:hover {
+    background: transparent;
+    border-bottom: 3px solid var(--nsw-brand-dark);
+    box-sizing: border-box;
+  }
+}
+.nsw-footer__built {
+  flex: none;
+}
+.nsw-section--brand-supplementary {
+  --nsw-text-hover: var(--nsw-palette-off-white);
+  --nsw-focus: var(--nsw-palette-blue-04);
+}
+
+.nsw-in-page-note {
+  @extend .nsw-in-page-alert;
+}
