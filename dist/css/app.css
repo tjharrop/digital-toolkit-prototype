@@ -5932,6 +5932,10 @@ a:visited {
   color: var(--nsw-text-light);
 }
 
+.highlight {
+  color: var(--nsw-brand-supplementary) !important;
+}
+
 .nsw-results-bar {
   min-height: 52px;
 }

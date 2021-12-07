@@ -1,7 +1,7 @@
 ---
 layout: default.hbs
 ---
-
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
       <div id="contentContainer">
       </div>
 
@@ -117,6 +117,7 @@ layout: default.hbs
       const listingTemplate = document.getElementById('listing-page');
       const listItemTemplate = document.getElementById('list-item');
       const pageContainer = document.getElementById("contentContainer");
+      const filtersContainer = ".nsw-filters__list";
       const articleBodyId = 'article-content';
       const tagQuerySelector = ".nsw-tag--checkbox input";
       const keywordsInputId = "filters-all-keyword";
@@ -124,147 +125,55 @@ layout: default.hbs
 
       const strapiURL = 'https://nsw-design-system-guides.herokuapp.com';
 
+      var currentDataset;
+
       function listingPage() {
-        let dataset;
 
         const clone = listingTemplate.content.cloneNode(true);
         pageContainer.appendChild(clone);
 
         const keywords = document.getElementById(keywordsInputId);
-
         if(keywords.value.length==0){
             var searchParams = new URLSearchParams(window.location.search);
-            query = searchParams.get('q');
-            keywords.value = query;
-        }
-
-        function rePopulate(){
-          document.getElementById(listWrapperId).replaceChildren();
-          populate();
+            keywords.value = searchParams.get('q');
         }
 
         function populate(searchStr){
-
-          var theCount = 0;
-          const selectedTags = document.querySelectorAll(`${tagQuerySelector}:checked`);
-
-          for (const [key, value] of Object.entries(dataset)) {
-            let increment = false;
-            let URL;
-            let checkedTags = activeTags(selectedTags);
-
-            const listItem = listItemTemplate.content.cloneNode(true);
-
-            if(value.URL){
-              listItem.querySelector(".nsw-list-item__title a").href = value.URL
-            } else {
-              const name = process(value.title);
-              const URL = `${pagePath}#/${value.id}/${name}`
-              listItem.querySelector(".nsw-list-item__title a").href = URL;
-              listItem.querySelector(".nsw-list-item__title a").dataset.internal = URL;
-            }
-
-            listItem.querySelector(".nsw-list-item__label").textContent = value.Author;
-            listItem.querySelector(".nsw-list-item__title a").textContent = value.title;
-            listItem.querySelector(".nsw-list-item__copy").textContent = value.synopsis;
-
-            const tags = listItem.querySelector(".nsw-list-item__tags .nsw-list");
-
-            let hide=false;
-
-            value.tags.forEach(tagData => {
-              var thisTag = document.createElement("div");
-              thisTag.classList = "nsw-tag";
-              thisTag.innerHTML = tagData.name
-              tags.appendChild(thisTag);
-
-              let siblingTags = document.querySelectorAll(`#tag-group-${tagData.tag_types[0].id} ${tagQuerySelector}`);
-              // console.log(`${siblingTags.length} selected`); console.log(siblingTags);
-              let checkedSiblingTags = activeTags(siblingTags);
-              console.log(`checked ones: ${checkedSiblingTags}`)
-
-              if (checkedSiblingTags.length==0) {
-                  increment = true;
-              } else if(checkedSiblingTags.includes(`tag-${tagData.id}`)){
-                if(keywords.value.length=0 || listItem.textContent.toLowerCase().includes(keywords.value.toLowerCase())){
-                  //document.getElementById(listWrapperId).appendChild(listItem);
-                  increment = true;
-                  if(checkedTags.includes(`tag-${tagData.id}`)){thisTag.classList.add("nsw-tag--filled")}
-                }
-              }
-              if ((checkedSiblingTags.length>0) && checkedSiblingTags.includes(`tag-${tagData.id}`)){
-                //increment = true; console.log('!!!!!!!!!!!!!! hide ' + value.title);
-              }
-            });
-
-            if (increment && !hide){
-              theCount++;
-              document.getElementById(listWrapperId).appendChild(listItem);
-            }
-
-            document.querySelector(".nsw-results-bar__info").innerHTML = `${theCount} results`;
-            document.getElementById('mobile-show').innerHTML = `Show ${theCount} results`;
-
-          }
+          renderItems(totalDataset);
         }
-
 
         fetch(`${strapiURL}/tag-types`).then(function (response) {
           return response.json();
         }).then(function (data) {
           let tagPropPromise = new Promise(function(resolve, reject) {
-            for (const [key, tagTypes] of Object.entries(data)) {
-              if(tagTypes.tags.length){
-                const tagGroup = document.createElement("div");
-                tagGroup.classList = "nsw-filters__item";
-                tagGroup.innerHTML = `<p class="nsw-form__label nsw-m-bottom-sm">${tagTypes.name}</p>`;
-                const tagCheckGroup = document.createElement("div");
-                tagCheckGroup.classList = "nsw-list nsw-list--8";
-                tagCheckGroup.id = `tag-group-${tagTypes.id}`;
-                tagGroup.append(tagCheckGroup);
-
-                for (const [key, tags] of Object.entries(tagTypes.tags)) {
-                  if(tags.guides.length){
-                    const checkbox = document.createElement("div");
-                    checkbox.classList = "nsw-tag nsw-tag--checkbox";
-                    checkbox.innerHTML = `
-                      <input type="checkbox" id="tag-${tags.id}" name="${tags.name}" value="tag-${tags.id}">
-                      <label for="tag-${tags.id}">${tags.name}</label>
-                    `;
-                    tagCheckGroup.append(checkbox);
-                    document.querySelector(".nsw-filters__list").append(tagGroup);
-                  }
-                }
-              }
-            }
+            renderTags(data, filtersContainer)
             resolve(); // when successful
             reject();  // when error
           });
-
           tagPropPromise.then(
             function(value) {
               fetch(`${strapiURL}/guides`).then(function (response) {
                 return response.json();
               }).then(function (data) {
-                dataset = data;
-
+                window.totalDataset = data;
+                currentDataset = data;
                 populate();
-
               }).catch(function (err) {
-                // There was an error
                 console.warn('Something went wrong getting guides.', err);
               });
             },
             function(error) { /* code if some error */ }
           )
         }).catch(function (err) {
-          // There was an error
           console.warn('Something went wrong adding checkboxes.', err);
         });
 
         document.querySelector(".nsw-filters__list").addEventListener('click', function(e) {
-        	if(e.target.nodeName == 'INPUT') {
-            rePopulate()
+        	if(e.target.type == 'checkbox') {
+            const filteredTags = getActiveTags();
+            const startingData = filterResourcesByKeyword(window.totalDataset,keywords.value)
+            const filterDataset = filterResourcesByTag(startingData,filteredTags);
+            rePopulate(filterDataset);
         	}
         });
 
@@ -277,15 +186,106 @@ layout: default.hbs
         });
 
         document.getElementById('keywordSubmit').addEventListener('click', function(e) {
-          rePopulate();
+          const filteredDataset = filterResourcesByTag(currentDataset,getActiveTags());
+          const searched = filterResourcesByKeyword(filteredDataset,keywords.value);
+          rePopulate(searched)
         });
 
         keywords.addEventListener('keypress', function(e) {
           if (e.key === 'Enter') {
-            rePopulate();
+            const filteredDataset = filterResourcesByTag(currentDataset,getActiveTags());
+            const searched = filterResourcesByKeyword(filteredDataset,e.target.value);
+            rePopulate(searched)
           }
         });
+
+        // keywords.addEventListener('keyup', function(e) {
+        //   const filteredDataset = filterResourcesByTag(currentDataset,getActiveTags());
+        //   const searched = filterResourcesByKeyword(filteredDataset,e.target.value);
+        //   rePopulate(searched)
+        // });
       };
+
+      function getActiveTags(){
+        let filteredTags = {};
+        let tagGroups = document.querySelectorAll('[data-taggroup]');
+        tagGroups.forEach((group) => {
+          filteredTags[group.dataset.taggroup] = []
+          inputs = group.querySelectorAll('input');
+          inputs = Array.from(inputs)
+
+          inputs.forEach((tag, i) => {
+            tagId = tag.dataset.id;
+            if(!filteredTags[group.dataset.taggroup][tag.dataset.id.toString()]){
+              filteredTags[group.dataset.taggroup][tag.dataset.id.toString()] = [];
+            }
+            filteredTags[group.dataset.taggroup][tag.dataset.id.toString()]['checked']=false;
+            filteredTags[group.dataset.taggroup][tag.dataset.id.toString()]['id']=tagId;
+          });
+
+          if (inputs.filter(i => i.checked==true).length){
+            inputs.filter(i => i.checked==true).forEach(filteredTag => {
+              filteredTags[group.dataset.taggroup][filteredTag.dataset.id.toString()]['checked']=true;
+              filteredTags[group.dataset.taggroup][filteredTag.dataset.id.toString()]['id']=filteredTag.dataset.id;
+            });
+
+          } else {
+            inputs.forEach(filteredTag => {
+              //filteredTags[group.dataset.id].push(filteredTag.dataset.id);
+            });
+          }
+
+        });
+        return filteredTags;
+      }
+
+      function filterResourcesByTag(dataIn,tags){
+        let startingData = dataIn.map(a => {return {...a}})
+        let filteredData=[];
+        let checkedCategories=[]
+
+        for (const [groupKey, groupValue] of Object.entries(tags)) {//loop tag groups array
+          if((tags[groupKey].filter(t => t.checked==true)).length){ // if anything is checked in a group...
+            checkedCategories.push(groupKey);
+          }
+        }
+
+        if(checkedCategories.length===0){
+          filteredData=dataIn.map(a => {return {...a}})
+        } else {
+          for (const [groupKey, groupValue] of Object.entries(tags)) {//loop tag groups array
+            if((tags[groupKey].filter(t => t.checked==true)).length){ // if anything is checked in a group...
+              const checked = tags[groupKey].filter(t => t.checked==true);
+              for (const [tagKey, tagValue] of Object.entries(checked)) {
+                // flag the ones that have one of the checked things
+                startingData.filter(i => i.tags.some(t => t.id==tagValue.id)).forEach((item, i) => {
+                  item.hasActiveTag=true;
+                  if (!item.activeTagCategories) {item.activeTagCategories=[]}
+                  if (item.activeTagCategories.indexOf(groupKey)===-1){item.activeTagCategories.push(groupKey);}
+                });
+              }
+            }
+          }
+          filteredData = startingData.filter(i => i.hasActiveTag===true && i.activeTagCategories.length===checkedCategories.length);
+        }
+        return filteredData;
+      }
+
+      function filterResourcesByKeyword(data, str){
+        let filteredData = data.map(a => {return {...a}})
+        filteredData = filteredData.filter(i => i.title.includes(str) || i.synopsis.includes(str));
+        filteredData.forEach((item, i) => {
+          item.synopsis = highlight(item.synopsis, str);
+          item.title = highlight(item.title, str);
+        });
+
+        return filteredData;
+      }
+
+      function rePopulate(data){
+        document.getElementById(listWrapperId).replaceChildren();
+        renderItems(data);
+      }
 
       function articlePage(id){
           fetch(`${strapiURL}/guides/${id}`).then(function (response) {
@@ -327,5 +327,82 @@ layout: default.hbs
         return value == undefined ? '' : value.replace(/[^a-z0-9_]+/gi, '-').replace(/^-|-$/g, '').toLowerCase();
       }
 
+      function renderItems(data){
+        let theCount = 0;
 
+        for (const [key, value] of Object.entries(data)) {
+          let increment = false;
+          let URL;
+
+          const listItem = listItemTemplate.content.cloneNode(true);
+
+          if(value.URL){
+            listItem.querySelector(".nsw-list-item__title a").href = value.URL
+          } else {
+            const name = process(value.title);
+            const URL = `${pagePath}#/${value.id}/${name}`
+            listItem.querySelector(".nsw-list-item__title a").href = URL;
+            listItem.querySelector(".nsw-list-item__title a").dataset.internal = URL;
+          }
+
+          listItem.querySelector(".nsw-list-item__label").textContent = value.Author;
+          listItem.querySelector(".nsw-list-item__title a").innerHTML = value.title;
+          listItem.querySelector(".nsw-list-item__copy").innerHTML = value.synopsis;
+
+          const tags = listItem.querySelector(".nsw-list-item__tags .nsw-list");
+
+          value.tags.forEach(tagData => {
+            var thisTag = document.createElement("div");
+            thisTag.classList = "nsw-tag";
+            thisTag.innerHTML = tagData.name
+            tags.appendChild(thisTag);
+          });
+
+          document.getElementById(listWrapperId).appendChild(listItem);
+
+          theCount++;
+
+        }
+        document.querySelector(".nsw-results-bar__info").innerHTML = `${theCount} results`;
+        document.getElementById('mobile-show').innerHTML = `Show ${theCount} results`;
+      }
+
+      function renderTags(data, filtersContainer){
+        for (const [key, tagTypes] of Object.entries(data)) {
+          if(tagTypes.tags.length){
+            const tagGroup = document.createElement("div");
+            tagGroup.classList = "nsw-filters__item";
+            tagGroup.innerHTML = `<p class="nsw-form__label nsw-m-bottom-sm">${tagTypes.name}</p>`;
+
+            const tagCheckGroup = document.createElement("div");
+            tagCheckGroup.classList = "nsw-list nsw-list--8";
+            tagCheckGroup.id = `tag-group-${tagTypes.id}`;
+            tagCheckGroup.dataset.taggroup = tagTypes.name;
+            tagCheckGroup.dataset.id = tagTypes.id;
+            tagGroup.append(tagCheckGroup);
+
+            for (const [key, tags] of Object.entries(tagTypes.tags)) {
+              if(tags.guides.length){
+                const checkbox = document.createElement("div");
+                checkbox.classList = "nsw-tag nsw-tag--checkbox";
+                checkbox.innerHTML = `
+                  <input type="checkbox" id="tag-${tags.id}" name="${tags.name}" value="tag-${tags.id}" data-id="${tags.id}" data-type="${tagTypes.name}">
+                  <label for="tag-${tags.id}">${tags.name}</label>
+                `;
+                tagCheckGroup.append(checkbox);
+                document.querySelector(filtersContainer).append(tagGroup);
+              }
+            }
+          }
+        }
+      }
+
+      function highlight(content,str) {
+        var index = content.indexOf(str);
+        if (index >= 0) {
+        console.log(content,' contains ',str)
+         content = content.substring(0,index) + "<span class='highlight'>" + content.substring(index,index+str.length) + "</span>" + content.substring(index + str.length);
+        }
+        return content;
+      }
       </script>

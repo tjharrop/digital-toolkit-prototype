@@ -216,7 +216,6 @@
       const listingTemplate = document.getElementById('listing-page');
       const listItemTemplate = document.getElementById('list-item');
       const pageContainer = document.getElementById("contentContainer");
-      const filtersContainer = ".nsw-filters__list";
       const articleBodyId = 'article-content';
       const tagQuerySelector = ".nsw-tag--checkbox input";
       const keywordsInputId = "filters-all-keyword";
@@ -227,14 +226,13 @@
       var currentDataset;
 
       function listingPage() {
-
         const clone = listingTemplate.content.cloneNode(true);
         pageContainer.appendChild(clone);
-
         const keywords = document.getElementById(keywordsInputId);
         if(keywords.value.length==0){
             var searchParams = new URLSearchParams(window.location.search);
-            keywords.value = searchParams.get('q');
+            query = searchParams.get('q');
+            keywords.value = query;
         }
 
         function populate(searchStr){
@@ -245,10 +243,36 @@
           return response.json();
         }).then(function (data) {
           let tagPropPromise = new Promise(function(resolve, reject) {
-            renderTags(data, filtersContainer)
+            for (const [key, tagTypes] of Object.entries(data)) {
+              if(tagTypes.tags.length){
+                const tagGroup = document.createElement("div");
+                tagGroup.classList = "nsw-filters__item";
+                tagGroup.innerHTML = `<p class="nsw-form__label nsw-m-bottom-sm">${tagTypes.name}</p>`;
+                const tagCheckGroup = document.createElement("div");
+                tagCheckGroup.classList = "nsw-list nsw-list--8";
+                tagCheckGroup.id = `tag-group-${tagTypes.id}`;
+                tagCheckGroup.dataset.taggroup = tagTypes.name;
+                tagCheckGroup.dataset.id = tagTypes.id;
+                tagGroup.append(tagCheckGroup);
+
+                for (const [key, tags] of Object.entries(tagTypes.tags)) {
+                  if(tags.guides.length){
+                    const checkbox = document.createElement("div");
+                    checkbox.classList = "nsw-tag nsw-tag--checkbox";
+                    checkbox.innerHTML = `
+                      <input type="checkbox" id="tag-${tags.id}" name="${tags.name}" value="tag-${tags.id}" data-id="${tags.id}" data-type="${tagTypes.name}">
+                      <label for="tag-${tags.id}">${tags.name}</label>
+                    `;
+                    tagCheckGroup.append(checkbox);
+                    document.querySelector(".nsw-filters__list").append(tagGroup);
+                  }
+                }
+              }
+            }
             resolve(); // when successful
             reject();  // when error
           });
+
           tagPropPromise.then(
             function(value) {
               fetch(`${strapiURL}/guides`).then(function (response) {
@@ -257,22 +281,65 @@
                 window.totalDataset = data;
                 currentDataset = data;
                 populate();
+
               }).catch(function (err) {
+                // There was an error
                 console.warn('Something went wrong getting guides.', err);
               });
             },
             function(error) { /* code if some error */ }
           )
         }).catch(function (err) {
+          // There was an error
           console.warn('Something went wrong adding checkboxes.', err);
         });
 
         document.querySelector(".nsw-filters__list").addEventListener('click', function(e) {
-        	if(e.target.type == 'checkbox') {
-            const filteredTags = getActiveTags();
-            const startingData = filterResourcesByKeyword(window.totalDataset,keywords.value)
-            const filterDataset = filterResourcesByTag(startingData,filteredTags);
-            rePopulate(filterDataset);
+        	if(e.target.nodeName == 'INPUT') {
+            //rePopulate()
+            let filteredTags = {};
+            let tagGroups = document.querySelectorAll('[data-taggroup]');
+            tagGroups.forEach((group) => {
+              filteredTags[group.dataset.taggroup] = []
+              inputs = group.querySelectorAll('input');
+              inputs = Array.from(inputs)
+
+              inputs.forEach((tag, i) => {
+                tagId = tag.dataset.id;
+                if(!filteredTags[group.dataset.taggroup][tag.dataset.id.toString()]){
+                  filteredTags[group.dataset.taggroup][tag.dataset.id.toString()] = [];
+                }
+                filteredTags[group.dataset.taggroup][tag.dataset.id.toString()]['checked']=false;
+                filteredTags[group.dataset.taggroup][tag.dataset.id.toString()]['id']=tagId;
+              });
+
+              if (inputs.filter(i => i.checked==true).length){
+                inputs.filter(i => i.checked==true).forEach(filteredTag => {
+                  filteredTags[group.dataset.taggroup][filteredTag.dataset.id.toString()]['checked']=true;
+                  filteredTags[group.dataset.taggroup][filteredTag.dataset.id.toString()]['id']=filteredTag.dataset.id;
+                });
+
+              } else {
+                inputs.forEach(filteredTag => {
+                  //filteredTags[group.dataset.id].push(filteredTag.dataset.id);
+                });
+              }
+
+            });
+            console.log('total',totalDataset);
+            console.log('tags',filteredTags);
+            const filterDataset = window.totalDataset.slice();
+            tagFilter(filterDataset,filteredTags);
+            // let displayTags;
+            // Array.prototype.forEach.call(getTags, function(el) {
+            //   let inputs = el.querySelectorAll('input')
+            //   for (let i = 0; i < inputs.length; i++) {
+            //     console.log(i);
+            //   }
+            //   //if (el.filter(i => i.title.includes(str))){}
+            //   //console.log(el);
+            // });
+
         	}
         });
 
@@ -285,63 +352,28 @@
         });
 
         document.getElementById('keywordSubmit').addEventListener('click', function(e) {
-          const filteredDataset = filterResourcesByTag(currentDataset,getActiveTags());
-          const searched = filterResourcesByKeyword(filteredDataset,keywords.value);
-          rePopulate(searched)
+          rePopulate(currentDataset);
         });
 
         keywords.addEventListener('keypress', function(e) {
           if (e.key === 'Enter') {
-            const filteredDataset = filterResourcesByTag(currentDataset,getActiveTags());
-            const searched = filterResourcesByKeyword(filteredDataset,e.target.value);
-            rePopulate(searched)
+            rePopulate(currentDataset);
           }
         });
 
-        // keywords.addEventListener('keyup', function(e) {
-        //   const filteredDataset = filterResourcesByTag(currentDataset,getActiveTags());
-        //   const searched = filterResourcesByKeyword(filteredDataset,e.target.value);
-        //   rePopulate(searched)
-        // });
+        keywords.addEventListener('keyup', function(e) {
+          //console.log(currentDataset);
+            search(currentDataset,e.target.value);
+        });
       };
 
-      function getActiveTags(){
-        let filteredTags = {};
-        let tagGroups = document.querySelectorAll('[data-taggroup]');
-        tagGroups.forEach((group) => {
-          filteredTags[group.dataset.taggroup] = []
-          inputs = group.querySelectorAll('input');
-          inputs = Array.from(inputs)
 
-          inputs.forEach((tag, i) => {
-            tagId = tag.dataset.id;
-            if(!filteredTags[group.dataset.taggroup][tag.dataset.id.toString()]){
-              filteredTags[group.dataset.taggroup][tag.dataset.id.toString()] = [];
-            }
-            filteredTags[group.dataset.taggroup][tag.dataset.id.toString()]['checked']=false;
-            filteredTags[group.dataset.taggroup][tag.dataset.id.toString()]['id']=tagId;
-          });
 
-          if (inputs.filter(i => i.checked==true).length){
-            inputs.filter(i => i.checked==true).forEach(filteredTag => {
-              filteredTags[group.dataset.taggroup][filteredTag.dataset.id.toString()]['checked']=true;
-              filteredTags[group.dataset.taggroup][filteredTag.dataset.id.toString()]['id']=filteredTag.dataset.id;
-            });
-
-          } else {
-            inputs.forEach(filteredTag => {
-              //filteredTags[group.dataset.id].push(filteredTag.dataset.id);
-            });
-          }
-
-        });
-        return filteredTags;
-      }
-
-      function filterResourcesByTag(dataIn,tags){
+      function tagFilter(dataIn,tags){
         let startingData = dataIn.map(a => {return {...a}})
         let filteredData=[];
         let checkedCategories=[]
+        console.log('before',startingData)
 
         for (const [groupKey, groupValue] of Object.entries(tags)) {//loop tag groups array
           if((tags[groupKey].filter(t => t.checked==true)).length){ // if anything is checked in a group...
@@ -355,30 +387,290 @@
           for (const [groupKey, groupValue] of Object.entries(tags)) {//loop tag groups array
             if((tags[groupKey].filter(t => t.checked==true)).length){ // if anything is checked in a group...
               const checked = tags[groupKey].filter(t => t.checked==true);
+              console.log('checked 1', checked);
               for (const [tagKey, tagValue] of Object.entries(checked)) {
                 // flag the ones that have one of the checked things
                 startingData.filter(i => i.tags.some(t => t.id==tagValue.id)).forEach((item, i) => {
                   item.hasActiveTag=true;
                   if (!item.activeTagCategories) {item.activeTagCategories=[]}
-                  if (item.activeTagCategories.indexOf(groupKey)===-1){item.activeTagCategories.push(groupKey);}
+                  if (item.activeTagCategories.indexOf(groupKey)===-1){item.activeTagCategories.push(groupKey);console.log(`Pushing ${groupKey} to ${item.title}`);}
                 });
               }
             }
           }
           filteredData = startingData.filter(i => i.hasActiveTag===true && i.activeTagCategories.length===checkedCategories.length);
         }
-        return filteredData;
+
+
+
+        rePopulate(filteredData);
+
+        startingData=[];
+        filteredData=[];
+
+        // for (const [groupKey, groupValue] of Object.entries(tags)) {//loop tag groups array
+        //   if((tags[groupKey].filter(t => t.checked==true)).length){//the group has checked things
+        //     //loop resources
+        //     startingData.filter(i => i.hasActiveTag===true).forEach((item, i) => {
+        //       //count number of checked categories
+        //
+        //
+        //
+        //       // if the tags on this filtered by checked tags length = 0
+        //       const checked = tags[groupKey].filter(t => t.checked==true);
+        //       console.log('checked', checked)
+        //       if(item.tags.filter(t => function(tag){
+        //         return checked.indexOf(tag.id) === -1;
+        //       }).length){
+        //         console.log('rm',item.title,item.tags.filter(t => function(tag){
+        //           return checked.indexOf(tag.id) === -1;
+        //         }).length);
+        //       } else {
+        //         console.log("don't rm",item.title);
+        //       }
+        //       // remove it
+        //     });
+        //   }
+        // }
+        //
+        //
+        //
+        //
+        // function filterResult (selectedItems) {
+        //   return data.filter(function (resource) {
+        //     return resource.tags.some(function(item){
+        //       return selectedItems.indexOf(item.id.toString()) > -1;
+        //     });
+        //   });
+        // }
+        //
+        // //loop the TAGS, not the dataset
+        // for (const [groupKey, groupValue] of Object.entries(tags)) {
+        //   let thisitem;
+        //   if(!(tags[groupKey].filter(t => t.checked==true)).length){ // if a group has no checked tags
+        //     // add any data with any tags from an unfiltered type to filteredData
+        //     console.log(`${groupKey} doesn't have checked tags`);
+        //     for (const [tagKey, tagValue] of Object.entries(tags[groupKey])) {
+        //       thisitem = data.filter(i => i.tags.some(t => t.id==tagValue.id));
+        //     }
+        //     filteredData = filteredData.concat(thisitem);
+        //   }
+        // }
+        // filteredData = [...new Set(filteredData)];
+        // for (const [groupKey, groupValue] of Object.entries(tags)) {
+        //   if((tags[groupKey].filter(t => t.checked==true)).length){ // if a group has checked tags
+        //     let toDelete=[];
+        //     console.log(`${groupKey} has checked tags`);
+        //     // remove anything in the array with the non-checked tags from this group
+        //     const unchecked = tags[groupKey].filter(t => t.checked==false);
+        //     const checked = tags[groupKey].filter(t => t.checked==true);
+        //     console.log('unchecked', unchecked)
+        //     for (const [tagKey, tagValue] of Object.entries(unchecked)) {
+        //       console.log('filteredData before',filteredData);
+        //       console.log('remove ',tagValue.id)
+        //       filteredData.forEach((item, i) => {
+        //         console.log(`${item.title} (${item.id}) tags`)
+        //         item.tags.forEach((tagitem, tagi) => {
+        //           console.log(tagitem.id);
+        //           if(tagitem.id.toString()==tagValue.id){
+        //             console.log(`removing`)
+        //             toDelete.push(i)
+        //           }
+        //         });
+        //       });
+        //       toDelete = [...new Set(toDelete)];
+        //       console.log('todelete', toDelete)
+        //       toDelete.forEach((item, i) => {
+        //         filteredData.splice(item,1)
+        //       });
+        //
+        //       console.log('filteredData after',filteredData);
+        //
+        //     }
+        //     // now add anything that has the checked tag
+        //     for (const [tagKey, tagValue] of Object.entries(checked)) {
+        //       //const selected = dataIn.filter(i => i.tags.some(t => toString(t.id)==tagValue.id));
+        //       //console.log('has the tag',selected)
+        //       //filteredData = filteredData.concat(selected)
+        //     }
+        //   }
+        // }
+        //
+
+
+        //for (const [groupKey, groupValue] of Object.entries(tags)) {
+        //   if((tags[groupKey].filter(t => t.checked==true)).length){
+        //     // add any data with those tags to filteredData
+        //     console.log(`${groupKey} has checked tags`);
+        //     // show = false; // This group has checked things, only show this item if it has the checked item
+        //     // for (const [tagKey, tagValue] of Object.entries(tags[groupKey].filter(t => t.checked==true))) {
+        //     //   //this one is checked
+        //     //   thisitem = data.filter(i => i.tags.some(t => t.id==tagValue.id));
+        //     //   show = true;
+        //     //   console.log(`showing items with ${tagValue.id}`);
+        //     //   console.log(thisitem);
+        //     //   filteredData = filteredData.concat(thisitem);
+        //     // }
+        //     // remove everything that doesn't have the checked tag
+        //     for (const [tagKey, tagValue] of Object.entries(tags[groupKey].filter(t => t.checked==true))) {
+        //       //this one is checked
+        //       data.filter(i => i.tags.some(t => t.id==tagValue.id)).forEach((item, i) => { //loop all in data with this checked tag
+        //         var index = filteredData.indexOf(item); //check if it's already there from the unchecked section loader
+        //         if (index !== -1) {
+        //           filteredData = filteredData.concat(item); // add it to the filtered array because it hasa a checked tag
+        //           show = true; //it's got the checked tag from the checked section
+        //         }
+        //       });
+        //
+        //
+        //       //delete everytihng that has tags from this section but not the checked ones
+        //       //
+        //       //
+        //       // thisitem = data.filter(i => i.tags.some(t => t.id==tagValue.id));
+        //       // show = true;
+        //       // console.log(`showing items with ${tagValue.id}`);
+        //       // console.log(thisitem);
+        //       // var index = filteredData.indexOf(thisitem);
+        //       // if (index !== -1) {
+        //       //   array.splice(index, 1);
+        //       // }
+        //       // filteredData = filteredData.concat(thisitem);
+        //     }
+        //
+        //
+        //   }// end group has checked tags
+        // } // end tags loop
+
+        // for (const [groupKey, groupValue] of Object.entries(tags)) { //go back over to sanitise data
+        //   if((tags[groupKey].filter(t => t.checked==true)).length){  //this group has checked tags
+        //     for (const [tagKey, tagValue] of Object.entries(tags[groupKey].filter(t => t.checked==false))) { // loop of the deselected TAGS
+        //       let itemCanStay = false;
+        //       filteredData.filter(i => i.tags.some(t => t.id==tagValue.id)).forEach((item, i) => { //loop all in data with this unchecked tag
+        //         itemCanStay = false;
+        //         item.tags.forEach((tagItem, tagI) => {
+        //           if((tags[groupKey].filter(t => t.checked==true && t.id==tagItem.id)).length){ // check whether any of its other tags in this category are any of the checked ones
+        //             itemCanStay = true;
+        //             console.log(`${item.title} can stay becuase it has ${tagItem.name}`);
+        //           }
+        //         });
+        //         if(!itemCanStay){
+        //           console.log(`${item.title} has to go`);
+        //           var index = filteredData.indexOf(item);
+        //           if (index !== -1) {
+        //             filteredData.splice(index, 1);
+        //           }
+        //         }
+        //         // if not, kill
+        //       });
+        //
+        //     } // close loop of tags from a checked group that arent checked
+        //   }
+        // }
+
+        //console.log(data);
+
+        // var filteredData = data.filter(function(item) {
+        //   return tagList.indexOf(item) !== -1;
+        // });
+        // filteredData = data.filter(i => i.tags.some(
+        //   function(itemTag){
+        //     console.log(tagList);
+        //     console.log(itemTag.id);
+        //     console.log(tagList.indexOf(itemTag.id.toString()));
+        //     return tagList.indexOf(itemTag.id.toString()) !== -1
+        //   }
+        // ));
+        //filteredData = filterResult(tagList);
+        //
+        // let filteredData = data.filter((resource) => {
+        //   const tags = [user.level, user.role].concat(user.tools, user.languages);
+        //   return filters.every(f => tags.includes(f));
+        // });
+
+        // const filteredData = data.filter(resources => resources.tags.includes(t => tagList.includes(t.id.toString())));
+
+        // filteredData = data.filter(result=>{
+        //   result.tags = result.tags.filter(tag=>(tagList.includes(tag.id)))
+        //   return result
+        // });
+        // var filteredData = data.filter(resource =>
+        //   tagList.some(selectedTag =>
+        //     resource.tags.some(tag =>
+        //       tag.id.toString().includes(selectedTag.toString())
+        //     )
+        //   )
+        // );
+        // _.filter(data, { tags: [ { id: 2 } ]});
+        // var filteredData = _.filter(data, function(resource) {
+        //   return tagList.length === _(resource.tags)
+        //       .toString('id')
+        //       .intersection(tagList)
+        //       .size();
+        // });
+        //
+        //
+        // function filterResult (selectedItems) {
+        //   return data.filter(function (resource) {
+        //     return resource.tags.some(function(item){
+        //       return selectedItems.indexOf(item.id.toString()) > -1;
+        //     });
+        //   });
+        // }
+
+        //for (const [key, value] of Object.entries(data)) {
+          // let tallyGroups = {}
+          // for (const [tagKey, tagValue] of Object.entries(someTags)) {
+          //   tallyGroups[tagKey] = 'default';
+          // }
+          // value.tags.forEach(tagData => {
+          //   // if this tag is from a group where one is ticked
+          //   // var anyChecked = tags[tagData.tag_types[0].id].some(function(tagType) {
+          //   //   tagType.some(function(tag){
+          //   //     tag.checked == true;
+          //   //   });
+          //   // });
+          //   // tags[tagData.tag_types[0].id].forEach((item, i) => {
+          //   //   console.log(item);
+          //   // });
+          //   const tagGroup = tagData.tag_types[0].name;
+          //   if((tags[tagGroup].filter(t => t.checked==true)).length){
+          //     // check if this one it ticked
+          //     if (tags[tagGroup][tagData.id]['checked']==true){
+          //       // Show
+          //       tallyGroups[tagGroup] = 'show'
+          //     } else {
+          //       // this tags is from a checked group, but not selected itself
+          //     }
+          //   } else {
+          //     // this tag is from a group where none are ticked
+          //     //show=true;
+          //     tallyGroups[tagGroup] = 'show'
+          //   }
+          //   // else don't
+          //   // if(tagList.indexOf(tagData.id.toString())>-1){
+          //   //   //console.log(`Showing ${value.title} because ${tagData.name} (${tagData.id}) is in ${tagList}`);
+          //   // } else {
+          //   //   //console.log(`Hiding ${value.title} because ${tagData.name} (${tagData.id}) isn't in ${tagList}`);
+          //   // }
+          //   if(tallyGroups[tagGroup] != 'show'){tallyGroups[tagGroup]='hide';}
+          // });
+          // if((filteredData.indexOf(value) === -1) && !(JSON.stringify(tallyGroups).includes('hide'))) {
+          //   filteredData.push(value);
+          //   //console.log(tallyGroups);
+          // }
+
+        //}
+
       }
 
-      function filterResourcesByKeyword(data, str){
-        let filteredData = data.map(a => {return {...a}})
-        filteredData = filteredData.filter(i => i.title.includes(str) || i.synopsis.includes(str));
-        filteredData.forEach((item, i) => {
-          item.synopsis = highlight(item.synopsis, str);
-          item.title = highlight(item.title, str);
-        });
 
-        return filteredData;
+      //            let checkedTags = activeTags(selectedTags);
+      //        const selectedTags = document.querySelectorAll(`${tagQuerySelector}:checked`);
+
+      function search(data, str){
+        filteredData = data.filter(i => i.title.includes(str));
+        //currentDataset = filteredData;
+        rePopulate(filteredData);
       }
 
       function rePopulate(data){
@@ -445,8 +737,8 @@
           }
 
           listItem.querySelector(".nsw-list-item__label").textContent = value.Author;
-          listItem.querySelector(".nsw-list-item__title a").innerHTML = value.title;
-          listItem.querySelector(".nsw-list-item__copy").innerHTML = value.synopsis;
+          listItem.querySelector(".nsw-list-item__title a").textContent = value.title;
+          listItem.querySelector(".nsw-list-item__copy").textContent = value.synopsis;
 
           const tags = listItem.querySelector(".nsw-list-item__tags .nsw-list");
 
@@ -457,53 +749,26 @@
             tags.appendChild(thisTag);
           });
 
+          theCount++;
           document.getElementById(listWrapperId).appendChild(listItem);
 
-          theCount++;
+          document.querySelector(".nsw-results-bar__info").innerHTML = `${theCount} results`;
+          document.getElementById('mobile-show').innerHTML = `Show ${theCount} results`;
 
-        }
-        document.querySelector(".nsw-results-bar__info").innerHTML = `${theCount} results`;
-        document.getElementById('mobile-show').innerHTML = `Show ${theCount} results`;
-      }
-
-      function renderTags(data, filtersContainer){
-        for (const [key, tagTypes] of Object.entries(data)) {
-          if(tagTypes.tags.length){
-            const tagGroup = document.createElement("div");
-            tagGroup.classList = "nsw-filters__item";
-            tagGroup.innerHTML = `<p class="nsw-form__label nsw-m-bottom-sm">${tagTypes.name}</p>`;
-
-            const tagCheckGroup = document.createElement("div");
-            tagCheckGroup.classList = "nsw-list nsw-list--8";
-            tagCheckGroup.id = `tag-group-${tagTypes.id}`;
-            tagCheckGroup.dataset.taggroup = tagTypes.name;
-            tagCheckGroup.dataset.id = tagTypes.id;
-            tagGroup.append(tagCheckGroup);
-
-            for (const [key, tags] of Object.entries(tagTypes.tags)) {
-              if(tags.guides.length){
-                const checkbox = document.createElement("div");
-                checkbox.classList = "nsw-tag nsw-tag--checkbox";
-                checkbox.innerHTML = `
-                  <input type="checkbox" id="tag-${tags.id}" name="${tags.name}" value="tag-${tags.id}" data-id="${tags.id}" data-type="${tagTypes.name}">
-                  <label for="tag-${tags.id}">${tags.name}</label>
-                `;
-                tagCheckGroup.append(checkbox);
-                document.querySelector(filtersContainer).append(tagGroup);
-              }
-            }
-          }
         }
       }
 
-      function highlight(content,str) {
-        var index = content.indexOf(str);
-        if (index >= 0) {
-        console.log(content,' contains ',str)
-         content = content.substring(0,index) + "<span class='highlight'>" + content.substring(index,index+str.length) + "</span>" + content.substring(index + str.length);
-        }
-        return content;
-      }
+      const arrayToString = (arr) => {
+         let str = '';
+         for(let i = 0; i < arr.length; i++){
+            if(Array.isArray(arr[i])){
+               str += `${arrayToString(arr[i])} `;
+            }else{
+               str += `${arr[i]} `;
+            };
+         };
+         return str;
+      };
       </script>
 
 
