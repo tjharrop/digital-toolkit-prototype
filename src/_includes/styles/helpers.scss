@@ -1,9 +1,13 @@
 .nsw-main-nav {
   --nsw-off-white: var(--nsw-palette-white)
 }
- .nsw-use-supplementary {
-   --nsw-brand-dark: var(--nsw-brand-supplementary);
- }
+.nsw-use-supplementary {
+  --nsw-brand-dark: var(--nsw-brand-supplementary);
+}
+
+.nsw-use-grey-02 {
+  --nsw-brand-dark: var(--nsw-palette-grey-02);
+}
 
  @media (min-width:48em) {
    .nsw-intro--partial {
@@ -35,6 +39,14 @@
   background-color: var(--nsw-brand-dark);
   color: var(--nsw-text-light);
 }
+.nsw-tag--light {
+  background-color: var(--nsw-palette-grey-04);
+  color: var(--nsw-palette-grey-02);
+  border-color: var(--nsw-palette-grey-04);
+}
 .highlight {
   color: var(--nsw-brand-supplementary)!important;
+}
+.nsw-tag--checkbox label {
+  cursor: pointer;
 }

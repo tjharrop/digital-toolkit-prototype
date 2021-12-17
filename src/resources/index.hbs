@@ -8,10 +8,10 @@ layout: default.hbs
         <template id="listing-page">
           <section class="nsw-section nsw-section--off-white nsw-p-top-lg nsw-p-bottom-lg">
             <div class="nsw-container">
-              <h2>Methods</h2>
+              <h2>Shared tools</h2>
               <div class="nsw-layout">
                 <div class="nsw-layout__main">
-                  <p class="nsw-intro">A library of methods, playbooks, and templates organised by practice, type, and topic.</p>
+                  <p class="nsw-intro">A library of reusable things created by NSW Government teams and available for others to use, organised by practice, type, and topic.</p>
                 </div>
                 <div class="nsw-layout__sidebar nsw-layout__sidebar--desktop"></div>
               </div>
@@ -31,7 +31,7 @@ layout: default.hbs
                     <div class="nsw-filters__back">
                       <button class="nsw-icon-button nsw-icon-button--flex js-close-sub-nav" type="button" aria-expanded="true" aria-controls="sub-nav-">
                         <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">keyboard_arrow_left</span>
-                        <span id="mobile-show">Show results</span>
+                        <span id="mobile-show">Show <span class="resultsCounter">0</span> results</span>
                       </button>
                     </div>
                     <div class="nsw-filters__title">Filter results</div>
@@ -50,7 +50,7 @@ layout: default.hbs
               </div>
               <main class="nsw-layout__main">
                 <div class="nsw-results-bar">
-                  <div class="nsw-results-bar__info"></div>
+                  <div class="nsw-results-bar__info"><span class="resultsCounter">0</span> results</div>
                 </div>
                 <div class="nsw-search-results">
                   <div id="guides"></div>
@@ -353,7 +353,11 @@ layout: default.hbs
 
           value.tags.forEach(tagData => {
             var thisTag = document.createElement("div");
-            thisTag.classList = "nsw-tag";
+            if(document.getElementById(`tag-${tagData.id}`).checked){
+              thisTag.classList = "nsw-tag nsw-tag--filled nsw-use-supplementary";
+            } else {
+              thisTag.classList = "nsw-tag nsw-tag--light";
+            }
             thisTag.innerHTML = tagData.name
             tags.appendChild(thisTag);
           });
@@ -363,8 +367,10 @@ layout: default.hbs
           theCount++;
 
         }
-        document.querySelector(".nsw-results-bar__info").innerHTML = `${theCount} results`;
-        document.getElementById('mobile-show').innerHTML = `Show ${theCount} results`;
+        document.querySelector(".resultsCounter").innerHTML = `${theCount}`;
+        document.querySelectorAll(".resultsCounter").forEach((item, i) => {
+          item.innerHTML = theCount;
+        });
       }
 
       function renderTags(data, filtersContainer){
@@ -405,4 +411,7 @@ layout: default.hbs
         }
         return content;
       }
+
+
+
       </script>

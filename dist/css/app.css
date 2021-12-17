@@ -5903,6 +5903,10 @@ a:visited {
   --nsw-brand-dark: var(--nsw-brand-supplementary);
 }
 
+.nsw-use-grey-02 {
+  --nsw-brand-dark: var(--nsw-palette-grey-02);
+}
+
 @media (min-width: 48em) {
   .nsw-intro--partial {
     max-width: 70%;
@@ -5932,8 +5936,18 @@ a:visited {
   color: var(--nsw-text-light);
 }
 
+.nsw-tag--light {
+  background-color: var(--nsw-palette-grey-04);
+  color: var(--nsw-palette-grey-02);
+  border-color: var(--nsw-palette-grey-04);
+}
+
 .highlight {
   color: var(--nsw-brand-supplementary) !important;
+}
+
+.nsw-tag--checkbox label {
+  cursor: pointer;
 }
 
 .nsw-results-bar {
